@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion';
 import { SCENERIES } from './game/animals';
 import type { Animal, Language } from './game/animals';
-import { Star, RefreshCw, Play, Trophy, Sparkles } from 'lucide-react';
+import { Star, RefreshCw, Play, Trophy, Sparkles, Cat, Dog, Bird, Rabbit } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 const App: React.FC = () => {
@@ -148,10 +148,18 @@ const App: React.FC = () => {
   if (gameState === 'intro') {
     return (
       <div className="w-full h-screen bg-linear-to-br from-indigo-600 via-purple-600 to-pink-500 flex flex-col items-center justify-center p-6 text-white overflow-hidden font-sans">
+        {/* Decorative Floating Animals */}
+        <div className="absolute inset-0 pointer-events-none opacity-20">
+          <motion.div animate={{ y: [0, 50, 0], x: [0, 30, 0] }} transition={{ repeat: Infinity, duration: 10 }} className="absolute top-10 left-10"><Cat size={100} /></motion.div>
+          <motion.div animate={{ y: [0, -40, 0], x: [0, -20, 0] }} transition={{ repeat: Infinity, duration: 8 }} className="absolute top-20 right-20"><Dog size={120} /></motion.div>
+          <motion.div animate={{ y: [0, 60, 0], x: [0, -40, 0] }} transition={{ repeat: Infinity, duration: 12 }} className="absolute bottom-20 left-20"><Bird size={80} /></motion.div>
+          <motion.div animate={{ y: [0, -30, 0], x: [0, 50, 0] }} transition={{ repeat: Infinity, duration: 9 }} className="absolute bottom-10 right-10"><Rabbit size={110} /></motion.div>
+        </div>
+
         <motion.div 
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="text-center w-full max-w-md"
+          className="text-center w-full max-w-md z-10"
         >
           <motion.div 
             animate={{ 
@@ -163,11 +171,11 @@ const App: React.FC = () => {
             className="flex justify-center mb-8"
           >
             <div className="relative">
-              <Star size={140} className="text-yellow-300 fill-yellow-300 drop-shadow-[0_0_40px_rgba(253,224,71,0.8)]" />
+              <Cat size={140} className="text-white drop-shadow-[0_0_40px_rgba(255,255,255,0.5)]" />
               <motion.div 
                 animate={{ opacity: [0, 1, 0], scale: [0.5, 1.5, 0.5] }}
                 transition={{ repeat: Infinity, duration: 2 }}
-                className="absolute -top-4 -right-4 text-white"
+                className="absolute -top-4 -right-4 text-yellow-300"
               >
                 <Sparkles size={48} />
               </motion.div>
