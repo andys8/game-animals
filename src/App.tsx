@@ -294,6 +294,8 @@ const App: React.FC = () => {
                   isClicked={clickedAnimalId === animal.id}
                   offset={animalOffsets[idx] || { x: 0, y: 0, duration: 5 }}
                   language={language}
+                  themeColor={currentScenery.themeColor}
+                  ringColor={currentScenery.ringColor}
                 />
               )
             ))}
@@ -312,9 +314,11 @@ interface AnimalCardProps {
   isClicked: boolean;
   offset: { x: number, y: number, duration: number };
   language: Language;
+  themeColor: string;
+  ringColor: string;
 }
 
-const AnimalCard: React.FC<AnimalCardProps> = ({ animal, onClick, isClicked, offset, language }) => {
+const AnimalCard: React.FC<AnimalCardProps> = ({ animal, onClick, isClicked, offset, language, themeColor, ringColor }) => {
   const Icon = animal.icon;
 
   return (
@@ -338,7 +342,7 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ animal, onClick, isClicked, off
         flex flex-col items-center justify-between
         w-56 h-56 md:w-80 md:h-80 lg:w-96 lg:h-96
         border-b-[20px] border-gray-200/60
-        ${isClicked ? 'ring-[24px] ring-brand-primary/40 !scale-110 !z-50' : 'z-10'}
+        ${isClicked ? `ring-[24px] ${ringColor} !scale-110 !z-50` : 'z-10'}
         transition-all duration-300
       `}
     >
@@ -361,16 +365,16 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ animal, onClick, isClicked, off
         {isClicked && (
           <motion.div
             initial={{ opacity: 0, scale: 0.5, y: 0 }}
-            animate={{ opacity: 1, scale: 2, y: -180 }}
+            animate={{ opacity: 1, scale: 1.5, y: -160 }}
             exit={{ opacity: 0, scale: 0.5 }}
-            className="absolute text-7xl font-black text-brand-primary drop-shadow-[0_15px_40px_rgba(0,0,0,0.3)] z-50 pointer-events-none whitespace-nowrap"
+            className={`absolute text-5xl md:text-7xl font-black ${themeColor} drop-shadow-[0_10px_30px_rgba(0,0,0,0.2)] z-50 pointer-events-none whitespace-nowrap`}
           >
             {animal.soundEmojis[language]}
           </motion.div>
         )}
       </AnimatePresence>
 
-      <div className={`mt-2 md:mt-4 text-xl md:text-3xl font-black tracking-tight transition-colors duration-300 ${isClicked ? 'text-brand-primary' : 'text-gray-300'}`}>
+      <div className={`mt-2 md:mt-4 text-xl md:text-3xl font-black tracking-tight transition-colors duration-300 ${isClicked ? themeColor : 'text-gray-300'}`}>
         {animal.names[language]}
       </div>
     </motion.button>

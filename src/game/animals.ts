@@ -30,6 +30,8 @@ export interface Scenery {
   id: string;
   names: Record<Language, string>;
   background: string;
+  themeColor: string;
+  ringColor: string;
   animals: Animal[];
   decorations: Decoration[];
 }
@@ -154,6 +156,8 @@ export const SCENERIES: Scenery[] = [
     id: 'garden',
     names: { en: 'Garden', de: 'Garten' },
     background: 'bg-linear-to-b from-green-300 via-emerald-200 to-yellow-100',
+    themeColor: 'text-green-600',
+    ringColor: 'ring-green-400/40',
     animals: [ANIMALS.cat, ANIMALS.dog, ANIMALS.bee],
     decorations: [
       { icon: Sun, className: 'top-10 right-10 text-yellow-400/60', animation: { rotate: 360 } },
@@ -165,6 +169,8 @@ export const SCENERIES: Scenery[] = [
     id: 'pond',
     names: { en: 'Pond', de: 'Teich' },
     background: 'bg-linear-to-b from-blue-400 via-cyan-200 to-indigo-100',
+    themeColor: 'text-blue-600',
+    ringColor: 'ring-blue-400/40',
     animals: [ANIMALS.fish, ANIMALS.turtle, ANIMALS.frog],
     decorations: [
       { icon: Waves, className: 'bottom-0 w-full text-white/40 h-16', animation: { x: [-10, 10, -10] } },
@@ -176,6 +182,8 @@ export const SCENERIES: Scenery[] = [
     id: 'forest',
     names: { en: 'Forest', de: 'Wald' },
     background: 'bg-linear-to-b from-emerald-500 via-green-200 to-orange-50',
+    themeColor: 'text-emerald-700',
+    ringColor: 'ring-emerald-500/40',
     animals: [ANIMALS.bear, ANIMALS.fox, ANIMALS.owl],
     decorations: [
       { icon: Tree, className: 'bottom-0 left-0 text-emerald-900/20 size-40', animation: { skewX: [-2, 2, -2] } },
@@ -187,6 +195,8 @@ export const SCENERIES: Scenery[] = [
     id: 'meadow',
     names: { en: 'Meadow', de: 'Wiese' },
     background: 'bg-linear-to-b from-yellow-300 via-green-200 to-emerald-100',
+    themeColor: 'text-orange-600',
+    ringColor: 'ring-orange-400/40',
     animals: [ANIMALS.rabbit, ANIMALS.squirrel, ANIMALS.bird],
     decorations: [
       { icon: Rainbow, className: 'top-10 left-1/4 text-white/20 size-64', animation: { opacity: [0.2, 0.5, 0.2] } },
@@ -198,6 +208,8 @@ export const SCENERIES: Scenery[] = [
     id: 'park',
     names: { en: 'Park', de: 'Park' },
     background: 'bg-linear-to-b from-blue-200 via-emerald-100 to-white',
+    themeColor: 'text-cyan-600',
+    ringColor: 'ring-cyan-400/40',
     animals: [ANIMALS.mouse, ANIMALS.worm, ANIMALS.snail],
     decorations: [
       { icon: Cloud, className: 'top-10 right-10 text-blue-400/20 size-32', animation: { x: [0, -40, 0] } },
