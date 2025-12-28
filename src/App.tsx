@@ -382,7 +382,7 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ animal, onClick, isClicked, off
         )}
       </AnimatePresence>
 
-      <div className={`mb-2 md:mb-6 mt-2 md:mt-4 text-xl md:text-3xl font-black tracking-tight transition-colors duration-300 ${isClicked ? themeColor : 'text-gray-300'}`}>
+      <div className={`mb-10 md:mb-20 mt-2 md:mt-4 text-xl md:text-3xl font-black tracking-tight transition-colors duration-300 ${isClicked ? themeColor : 'text-gray-300'}`}>
         {animal.names[language]}
       </div>
     </motion.button>
