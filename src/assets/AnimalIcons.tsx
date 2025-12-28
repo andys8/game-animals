@@ -45,23 +45,32 @@ export const Bear = ({ size = 24, ...props }: any) => (
     strokeLinejoin="round"
     {...props}
   >
-    {/* Rounded Ears with Inner Detail */}
-    <circle cx="6" cy="7" r="4" fill="currentColor" fillOpacity="0.1" />
-    <circle cx="6" cy="7" r="4" />
-    <circle cx="18" cy="7" r="4" fill="currentColor" fillOpacity="0.1" />
-    <circle cx="18" cy="7" r="4" />
-    {/* Big Round Face */}
+    {/* Integrated rounded ears with depth */}
+    <circle cx="7" cy="7" r="4" fill="currentColor" fillOpacity="0.1" />
+    <circle cx="17" cy="7" r="4" fill="currentColor" fillOpacity="0.1" />
+    
+    {/* Big round face */}
     <circle cx="12" cy="13" r="9" fill="currentColor" fillOpacity="0.05" />
     <circle cx="12" cy="13" r="9" />
-    {/* Muzzle Area */}
-    <circle cx="12" cy="16" r="4.5" fill="white" stroke="currentColor" strokeWidth="1.5" />
-    {/* Big Soft Nose */}
-    <circle cx="12" cy="15" r="1.5" fill="black" />
-    {/* Kind Eyes */}
-    <circle cx="8.5" cy="11" r="1.2" fill="currentColor" />
-    <circle cx="15.5" cy="11" r="1.2" fill="currentColor" />
-    {/* Smile */}
-    <path d="M10.5 18c1 1 2 1 3 0" />
+
+    {/* Expressive eyes with highlights */}
+    <g fill="currentColor" stroke="none">
+      <circle cx="8.5" cy="11" r="1.5" />
+      <circle cx="15.5" cy="11" r="1.5" />
+    </g>
+    <g fill="white" stroke="none">
+      <circle cx="8" cy="10.2" r="0.5" />
+      <circle cx="15" cy="10.2" r="0.5" />
+    </g>
+
+    {/* Muzzle area */}
+    <ellipse cx="12" cy="16" rx="4.5" ry="3.5" fill="white" stroke="currentColor" strokeWidth="1.5" />
+    
+    {/* Soft dark nose */}
+    <path d="M10.5 15.5c0-1 3-1 3 0s-1.5 1.5-1.5 1.5-1.5-.5-1.5-1.5z" fill="currentColor" stroke="none" />
+    
+    {/* Gentle smile */}
+    <path d="M10.5 18c0.5 0.5 2.5 0.5 3 0" strokeWidth="1.5" />
   </svg>
 );
 
