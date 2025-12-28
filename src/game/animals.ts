@@ -13,7 +13,9 @@ import {
   Palmtree,
   Sprout,
   Shovel,
-  Wind
+  Wind,
+  Shrub,
+  Rainbow
 } from 'lucide-react';
 
 export type Language = 'en' | 'de';
@@ -183,7 +185,9 @@ export const SCENERIES: Scenery[] = [
       { icon: Flower, className: 'bottom-10 left-20 text-pink-400/40', animation: { scale: [1, 1.2, 1] } },
       { icon: Flower, className: 'bottom-20 right-40 text-purple-400/40', animation: { scale: [1, 1.3, 1] } },
       { icon: Sprout, className: 'bottom-32 left-40 text-green-600/30', animation: { y: [0, 10, 0] } },
-      { icon: Bug, className: 'top-40 left-10 text-red-400/20', animation: { x: [0, 20, 0], rotate: [0, 45, 0] } }
+      { icon: Flower, className: 'top-1/2 left-5 text-yellow-400/20', animation: { rotate: 180 } },
+      { icon: Shrub, className: 'bottom-0 left-0 text-emerald-800/20 size-48', animation: { skewX: 2 } },
+      { icon: Leaf, className: 'top-20 left-1/4 text-green-500/20', animation: { rotate: 45 } }
     ]
   },
   {
@@ -196,7 +200,9 @@ export const SCENERIES: Scenery[] = [
       { icon: Cloud, className: 'top-20 left-20 text-white/80', animation: { x: [0, 100, 0] } },
       { icon: Shell, className: 'bottom-10 right-20 text-orange-200/60', animation: { rotate: [0, 15, 0] } },
       { icon: Waves, className: 'top-1/2 left-0 w-full text-blue-400/10 h-12', animation: { x: [10, -10, 10] } },
-      { icon: Cloud, className: 'top-10 right-40 text-white/40', animation: { x: [0, -60, 0] } }
+      { icon: Cloud, className: 'top-10 right-40 text-white/40', animation: { x: [0, -60, 0] } },
+      { icon: Shell, className: 'bottom-20 left-10 text-yellow-100/40', animation: { scale: 0.8 } },
+      { icon: Waves, className: 'bottom-40 w-full text-white/10 h-8', animation: { x: [-5, 5, -5] } }
     ]
   },
   {
@@ -209,7 +215,9 @@ export const SCENERIES: Scenery[] = [
       { icon: Tree, className: 'bottom-0 right-5 text-green-900/20 size-64', animation: { skewX: [3, -3, 3] } },
       { icon: Leaf, className: 'top-10 left-1/2 text-green-400/30', animation: { y: [0, 40, 0], rotate: 360 } },
       { icon: Tree, className: 'bottom-20 left-1/3 text-emerald-800/10 size-32', animation: { skewX: [-1, 1, -1] } },
-      { icon: Mountain, className: 'bottom-0 right-1/4 text-gray-400/10 size-96', animation: { scale: [1, 1.02, 1] } }
+      { icon: Mountain, className: 'bottom-0 right-1/4 text-gray-400/10 size-96', animation: { scale: [1, 1.02, 1] } },
+      { icon: Shrub, className: 'bottom-10 right-1/3 text-green-700/20 size-24', animation: { scale: 1.1 } },
+      { icon: Cloud, className: 'top-20 right-10 text-white/30', animation: { x: [0, 40, 0] } }
     ]
   },
   {
@@ -222,7 +230,8 @@ export const SCENERIES: Scenery[] = [
       { icon: Tree, className: 'bottom-0 right-20 text-yellow-900/20 size-56', animation: { skewY: [0, 2, 0] } },
       { icon: Cloud, className: 'top-32 right-20 text-white/50', animation: { x: [0, -50, 0] } },
       { icon: Shovel, className: 'bottom-10 left-10 text-amber-800/20 size-24', animation: { rotate: [-5, 5, -5] } },
-      { icon: Wind, className: 'top-20 left-1/3 text-white/30', animation: { x: [-100, 100, -100], opacity: [0, 1, 0] } }
+      { icon: Wind, className: 'top-20 left-1/3 text-white/30', animation: { x: [-100, 100, -100], opacity: [0, 1, 0] } },
+      { icon: Shrub, className: 'bottom-0 right-1/2 text-orange-800/10 size-32', animation: { scale: [1, 1.05, 1] } }
     ]
   },
   {
@@ -235,7 +244,8 @@ export const SCENERIES: Scenery[] = [
       { icon: Tree, className: 'bottom-0 right-20 text-yellow-900/20 size-56', animation: { skewY: [0, 2, 0] } },
       { icon: Cloud, className: 'top-32 right-20 text-white/50', animation: { x: [0, -50, 0] } },
       { icon: Flower, className: 'bottom-10 left-1/4 text-red-400/30', animation: { scale: [1, 1.2, 1] } },
-      { icon: Tree, className: 'bottom-0 left-10 text-green-800/10 size-48', animation: { skewX: [1, -1, 1] } }
+      { icon: Tree, className: 'bottom-0 left-10 text-green-800/10 size-48', animation: { skewX: [1, -1, 1] } },
+      { icon: Rainbow, className: 'top-10 right-1/4 text-white/20 size-64', animation: { opacity: [0.2, 0.5, 0.2] } }
     ]
   },
   {
@@ -248,7 +258,8 @@ export const SCENERIES: Scenery[] = [
       { icon: Tree, className: 'bottom-0 left-0 text-orange-900/30 size-80', animation: { rotate: [-1, 1, -1] } },
       { icon: Palmtree, className: 'bottom-0 right-0 text-yellow-900/20 size-72', animation: { skewX: [-2, 2, -2] } },
       { icon: Wind, className: 'top-40 right-10 text-white/10', animation: { x: [0, -200, 0] } },
-      { icon: Mountain, className: 'bottom-0 left-1/4 text-orange-950/10 size-64', animation: { y: [0, 5, 0] } }
+      { icon: Mountain, className: 'bottom-0 left-1/4 text-orange-950/10 size-64', animation: { y: [0, 5, 0] } },
+      { icon: Palmtree, className: 'bottom-20 left-1/3 text-orange-800/10 size-48', animation: { rotate: [0, 5, 0] } }
     ]
   }
 ];
