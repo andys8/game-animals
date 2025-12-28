@@ -39,16 +39,15 @@ const App: React.FC = () => {
 
   const animalOffsets = useMemo(() => {
     if (!currentScenery) return [];
-    // 3 distinct vertical zones with wide horizontal spread to prevent overlap/cutoff
-    // Values are % offsets from the center of their flex positions
+    // 3 safe zones closer together and lower down (positive Y)
     const zones = [
-      { bx: 0, by: -25 }, // Top zone
-      { bx: 0, by: 0 },   // Middle zone
-      { bx: 0, by: 25 }   // Bottom zone
+      { bx: -10, by: 5 },
+      { bx: 10, by: 10 },
+      { bx: 0, by: 25 }
     ];
     return currentScenery.animals.map((_, i) => ({
-      x: (Math.random() * 60 - 30), // Wide horizontal variety (-30% to 30%)
-      y: zones[i % 3].by + (Math.random() * 10 - 5), // Vertical variety within zone
+      x: zones[i % 3].bx + (Math.random() * 10 - 5),
+      y: zones[i % 3].by + (Math.random() * 10 - 5),
       duration: (Math.random() * 2 + 4) 
     }));
   }, [currentSceneryIndex, positionSeed]);
