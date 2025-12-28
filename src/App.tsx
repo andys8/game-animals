@@ -12,17 +12,21 @@ const App: React.FC = () => {
   const [score, setScore] = useState(0);
   const [clickedAnimalId, setClickedAnimalId] = useState<string | null>(null);
   const [showMilestone, setShowMilestone] = useState(false);
-  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [positionSeed, setPositionSeed] = useState(0);
 
   const currentScenery = SCENERIES[currentSceneryIndex];
 
-  const animalPositions = useMemo(() => {
-    return [
-      { x: -8, y: -5 },
-      { x: 8, y: 5 },
-      { x: 0, y: -12 },
-    ];
-  }, [currentSceneryIndex]);
+  // Randomize animal positions with a seed to trigger updates
+  const animalOffsets = useMemo(() => {
+    return currentScenery.animals.map(() => ({
+      x: (Math.random() * 40 - 20), // -20% to 20%
+      y: (Math.random() * 30 - 15), // -15% to 15%
+      // Random movement range for floating effect
+      moveX: (Math.random() * 30 + 20),
+      moveY: (Math.random() * 20 + 10),
+      duration: (Math.random() * 2 + 3) // 3-5 seconds
+    }));
+  }, [currentSceneryIndex, positionSeed]);
 
   const startGame = () => {
     setGameState('playing');
@@ -40,7 +44,6 @@ const App: React.FC = () => {
       colors: ['#FF6B6B', '#4ECDC4', '#FFE66D', '#FF9F43', '#A29BFE']
     });
 
-    // Play a happy sound or just speak "Yay!"
     const msg = language === 'en' ? 'Wonderful!' : 'Super gemacht!';
     const utterance = new SpeechSynthesisUtterance(msg);
     utterance.lang = language === 'de' ? 'de-DE' : 'en-US';
@@ -50,35 +53,33 @@ const App: React.FC = () => {
     setTimeout(() => {
       setShowMilestone(false);
       setCurrentSceneryIndex((prev) => (prev + 1) % SCENERIES.length);
+      setPositionSeed(s => s + 1);
     }, 2500);
   };
+
+  const [isSpeaking, setIsSpeaking] = useState(false);
 
   const playSound = (animal: Animal) => {
     if (isSpeaking || showMilestone) return;
 
     setIsSpeaking(true);
-    
     const utterance = new SpeechSynthesisUtterance(animal.names[language]);
     utterance.lang = language === 'de' ? 'de-DE' : 'en-US';
-    utterance.rate = 0.75; // Slower for clarity
-    utterance.pitch = 1.3; // Higher/Friendlier for toddlers
+    utterance.rate = 0.75;
+    utterance.pitch = 1.3;
     
     utterance.onend = () => setIsSpeaking(false);
     utterance.onerror = () => setIsSpeaking(false);
-    
-    // Fallback: in some browsers onend might not fire reliably
     setTimeout(() => setIsSpeaking(false), 2000);
 
     window.speechSynthesis.speak(utterance);
 
-    // Visual feedback logic
-    setClickedAnimalId(null); // Reset first to re-trigger animation if same animal
+    setClickedAnimalId(null);
     setTimeout(() => setClickedAnimalId(animal.id), 10);
     
     const newScore = score + 1;
     setScore(newScore);
 
-    // Every 10 points is a level clear / milestone
     if (newScore > 0 && newScore % 10 === 0) {
       triggerMilestone();
     }
@@ -86,11 +87,12 @@ const App: React.FC = () => {
 
   const nextScenery = () => {
     setCurrentSceneryIndex((prev) => (prev + 1) % SCENERIES.length);
+    setPositionSeed(s => s + 1);
   };
 
   if (gameState === 'intro') {
     return (
-      <div className="w-full h-screen bg-linear-to-br from-indigo-500 via-purple-500 to-pink-500 flex flex-col items-center justify-center p-6 text-white overflow-hidden">
+      <div className="w-full h-screen bg-linear-to-br from-indigo-500 via-purple-500 to-pink-500 flex flex-col items-center justify-center p-6 text-white overflow-hidden font-sans">
         <motion.div 
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -108,7 +110,7 @@ const App: React.FC = () => {
             ANIMAL<br/>FRIENDS
           </h1>
 
-          <div className="bg-white/20 backdrop-blur-xl p-4 rounded-[3rem] flex gap-2 mb-10 border-2 border-white/30">
+          <div className="bg-white/20 backdrop-blur-xl p-4 rounded-[3rem] flex gap-2 mb-10 border-2 border-white/30 shadow-inner">
             <button 
               onClick={() => setLanguage('en')}
               className={`flex-1 py-4 px-6 rounded-[2rem] text-2xl font-black transition-all flex items-center justify-center gap-2 ${language === 'en' ? 'bg-white text-indigo-600 shadow-xl scale-105' : 'text-white/80 hover:bg-white/10'}`}
@@ -201,7 +203,7 @@ const App: React.FC = () => {
       <div className="flex-1 relative flex items-center justify-center z-20 overflow-visible">
         <AnimatePresence mode="wait">
           <motion.div 
-            key={currentScenery.id}
+            key={`${currentScenery.id}-${positionSeed}`}
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.1 }}
@@ -209,11 +211,11 @@ const App: React.FC = () => {
           >
             {currentScenery.animals.map((animal, idx) => (
               <AnimalCard 
-                key={`${currentScenery.id}-${animal.id}-${idx}`}
+                key={`${currentScenery.id}-${animal.id}-${idx}-${positionSeed}`}
                 animal={animal} 
                 onClick={() => playSound(animal)}
                 isClicked={clickedAnimalId === animal.id}
-                offset={animalPositions[idx]}
+                offset={animalOffsets[idx]}
                 language={language}
               />
             ))}
@@ -221,7 +223,6 @@ const App: React.FC = () => {
         </AnimatePresence>
       </div>
 
-      {/* Scenery Name */}
       <div className="absolute bottom-10 left-0 right-0 text-center pointer-events-none z-30">
         <motion.p 
           key={currentScenery.id}
@@ -240,7 +241,7 @@ interface AnimalCardProps {
   animal: Animal;
   onClick: () => void;
   isClicked: boolean;
-  offset: { x: number, y: number };
+  offset: { x: number, y: number, moveX: number, moveY: number, duration: number };
   language: Language;
 }
 
@@ -249,7 +250,16 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ animal, onClick, isClicked, off
 
   return (
     <motion.button
-      style={{ x: `${offset.x}%`, y: `${offset.y}%` }}
+      initial={{ x: `${offset.x}%`, y: `${offset.y}%` }}
+      animate={{ 
+        x: [`${offset.x}%`, `${offset.x + 5}%`, `${offset.x - 5}%`, `${offset.x}%`],
+        y: [`${offset.y}%`, `${offset.y + 5}%`, `${offset.y - 5}%`, `${offset.y}%`],
+      }}
+      transition={{ 
+        duration: offset.duration * 2, 
+        repeat: Infinity, 
+        ease: "easeInOut" 
+      }}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.9 }}
       onClick={onClick}
@@ -268,13 +278,13 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ animal, onClick, isClicked, off
           key={isClicked ? 'clicked' : 'idle'}
           initial={false}
           animate={isClicked ? {
-            rotate: [0, -20, 20, -20, 20, 0],
-            scale: [1, 1.3, 1],
+            rotate: [0, -25, 25, -25, 25, 0],
+            scale: [1, 1.4, 1],
           } : {}}
           transition={{ duration: 0.5, type: "spring", stiffness: 300 }}
           className={`${animal.color} flex items-center justify-center`}
         >
-          <Icon size="100%" className="w-28 h-28 md:w-44 md:h-44 lg:w-52 lg:h-52" strokeWidth={2.5} />
+          <Icon size="100%" className="w-28 h-28 md:w-40 md:h-40 lg:w-48 lg:h-48" strokeWidth={2.5} />
         </motion.div>
       </div>
       
@@ -291,7 +301,7 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ animal, onClick, isClicked, off
         )}
       </AnimatePresence>
 
-      <div className={`mb-2 md:mb-4 text-xl md:text-2xl font-black tracking-tight transition-colors duration-300 ${isClicked ? 'text-brand-primary' : 'text-gray-300'}`}>
+      <div className={`mt-2 md:mt-4 text-lg md:text-xl font-black tracking-tight transition-colors duration-300 ${isClicked ? 'text-brand-primary' : 'text-gray-300'}`}>
         {animal.names[language]}
       </div>
     </motion.button>
