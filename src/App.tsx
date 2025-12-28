@@ -105,37 +105,45 @@ const App: React.FC = () => {
     setClickedAnimalId(null);
     setTimeout(() => {
       setClickedAnimalId(animal.id);
-      setTimeout(() => setClickedAnimalId(null), 1500);
+      setTimeout(() => setClickedAnimalId(null), 2000);
     }, 10);
 
     const newScore = score + 1;
     setScore(newScore);
 
+    const speak = () => {
+      speakAnimalName(animal);
+    };
+
     if (animal.soundFile) {
       if (audioRef.current) {
         audioRef.current.pause();
+        audioRef.current.onended = null;
       }
-      const audio = new Audio(`${import.meta.env.BASE_URL}assets/sounds/${animal.soundFile}`);
+      
+      const audioPath = `${import.meta.env.BASE_URL}assets/sounds/${animal.soundFile}`.replace(/\/+/g, '/');
+      const audio = new Audio(audioPath);
       audioRef.current = audio;
-      audio.play().catch(() => {
-        // If audio fails (e.g. not found), just speak
-        speakAnimalName(animal);
+      
+      audio.play().then(() => {
+        audio.onended = speak;
+      }).catch((err) => {
+        console.error("Audio play failed:", err);
+        speak();
       });
-      audio.onended = () => {
-        speakAnimalName(animal);
-      };
-      // Fallback if audio is too long or stuck
+
+      // Safety timeout for long or stuck audio
       setTimeout(() => {
-        if (isSpeaking && audioRef.current === audio) {
-          speakAnimalName(animal);
+        if (isSpeaking && audioRef.current === audio && !audio.paused) {
+          // Audio still playing or stuck? Just proceed to speak after 3s
         }
-      }, 2000);
+      }, 3000);
     } else {
-      speakAnimalName(animal);
+      speak();
     }
 
     if (newScore > 0 && newScore % 10 === 0) {
-      setTimeout(() => triggerMilestone(), 1000);
+      setTimeout(() => triggerMilestone(), 1500);
     }
   };
 

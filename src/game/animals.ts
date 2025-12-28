@@ -73,7 +73,8 @@ export const ANIMALS: Record<string, Animal> = {
     names: { en: 'Rabbit', de: 'Hase' },
     icon: Rabbit,
     color: 'text-rose-300',
-    soundEmojis: { en: 'Hop!', de: 'Hüpf!' }
+    soundEmojis: { en: 'Hop!', de: 'Hüpf!' },
+    soundFile: 'rabbit.mp3'
   },
   fish: {
     id: 'fish',
@@ -94,7 +95,8 @@ export const ANIMALS: Record<string, Animal> = {
     names: { en: 'Ladybug', de: 'Marienkäfer' },
     icon: Bug,
     color: 'text-red-500',
-    soundEmojis: { en: 'Buzz!', de: 'Summ!' }
+    soundEmojis: { en: 'Buzz!', de: 'Summ!' },
+    soundFile: 'cricket.mp3'
   },
   squirrel: {
     id: 'squirrel',
@@ -115,7 +117,8 @@ export const ANIMALS: Record<string, Animal> = {
     names: { en: 'Mouse', de: 'Maus' },
     icon: Mouse,
     color: 'text-gray-400',
-    soundEmojis: { en: 'Squeak!', de: 'Piep!' }
+    soundEmojis: { en: 'Squeak!', de: 'Piep!' },
+    soundFile: 'mouse.mp3'
   },
   worm: {
     id: 'worm',
