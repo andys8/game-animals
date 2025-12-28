@@ -8,7 +8,7 @@ import {
   Worm,
   Rainbow
 } from 'lucide-react';
-import { Frog, Bee, Bear, Fox, Owl } from '../assets/AnimalIcons';
+import { Frog, Bear, Owl } from '../assets/AnimalIcons';
 
 export type Language = 'en' | 'de';
 
@@ -86,26 +86,12 @@ export const ANIMALS: Record<string, Animal> = {
     color: 'text-green-500',
     soundEmojis: { en: 'Ribbit!', de: 'Quaak!' }
   },
-  bee: {
-    id: 'bee',
-    names: { en: 'Bee', de: 'Biene' },
-    icon: Bee,
-    color: 'text-yellow-500',
-    soundEmojis: { en: 'Bzzz!', de: 'Summ!' }
-  },
   bear: {
     id: 'bear',
     names: { en: 'Bear', de: 'Bär' },
     icon: Bear,
     color: 'text-amber-900',
     soundEmojis: { en: 'Grrr!', de: 'Brumm!' }
-  },
-  fox: {
-    id: 'fox',
-    names: { en: 'Fox', de: 'Fuchs' },
-    icon: Fox,
-    color: 'text-orange-600',
-    soundEmojis: { en: 'Yap!', de: 'Kläff!' }
   },
   owl: {
     id: 'owl',
@@ -158,7 +144,7 @@ export const SCENERIES: Scenery[] = [
     background: 'bg-linear-to-b from-green-300 via-emerald-200 to-yellow-100',
     themeColor: 'text-green-600',
     ringColor: 'ring-green-400/40',
-    animals: [ANIMALS.cat, ANIMALS.dog, ANIMALS.bee],
+    animals: [ANIMALS.cat, ANIMALS.dog, ANIMALS.mouse],
     decorations: [
       { icon: Sun, className: 'top-10 right-10 text-yellow-400/60', animation: { rotate: 360 } },
       { icon: Flower, className: 'bottom-10 left-10 text-pink-400/40', animation: { scale: [1, 1.2, 1] } },
@@ -184,7 +170,7 @@ export const SCENERIES: Scenery[] = [
     background: 'bg-linear-to-b from-emerald-500 via-green-200 to-orange-50',
     themeColor: 'text-emerald-700',
     ringColor: 'ring-emerald-500/40',
-    animals: [ANIMALS.bear, ANIMALS.fox, ANIMALS.owl],
+    animals: [ANIMALS.bear, ANIMALS.owl, ANIMALS.squirrel],
     decorations: [
       { icon: Tree, className: 'bottom-0 left-0 text-emerald-900/20 size-40', animation: { skewX: [-2, 2, -2] } },
       { icon: Tree, className: 'bottom-0 right-0 text-green-900/20 size-48', animation: { skewX: [2, -2, 2] } },
@@ -197,7 +183,7 @@ export const SCENERIES: Scenery[] = [
     background: 'bg-linear-to-b from-yellow-300 via-green-200 to-emerald-100',
     themeColor: 'text-orange-600',
     ringColor: 'ring-orange-400/40',
-    animals: [ANIMALS.rabbit, ANIMALS.squirrel, ANIMALS.bird],
+    animals: [ANIMALS.rabbit, ANIMALS.bird, ANIMALS.ladybug],
     decorations: [
       { icon: Rainbow, className: 'top-10 left-1/4 text-white/20 size-64', animation: { opacity: [0.2, 0.5, 0.2] } },
       { icon: Flower, className: 'bottom-10 left-10 text-red-400/30 size-24', animation: { scale: [1, 1.2, 1] } },
@@ -210,7 +196,7 @@ export const SCENERIES: Scenery[] = [
     background: 'bg-linear-to-b from-blue-200 via-emerald-100 to-white',
     themeColor: 'text-cyan-600',
     ringColor: 'ring-cyan-400/40',
-    animals: [ANIMALS.mouse, ANIMALS.worm, ANIMALS.snail],
+    animals: [ANIMALS.snail, ANIMALS.worm],
     decorations: [
       { icon: Cloud, className: 'top-10 right-10 text-blue-400/20 size-32', animation: { x: [0, -40, 0] } },
       { icon: Tree, className: 'bottom-0 left-5 text-green-800/10 size-48', animation: { skewX: [1, -1, 1] } },
