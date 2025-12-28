@@ -187,7 +187,7 @@ export const SCENERIES: Scenery[] = [
     id: 'farm',
     names: { en: 'Farm', de: 'Bauernhof' },
     background: 'bg-linear-to-b from-amber-200 via-yellow-100 to-orange-50',
-    animals: [ANIMALS.cow, ANIMALS.sheep, ANIMALS.pig],
+    animals: [ANIMALS.cow, ANIMALS.sheep, ANIMALS.mouse],
     decorations: [
       { icon: Sun, className: 'top-5 left-5 text-orange-400/40 size-32', animation: { scale: [1, 1.1, 1] } },
       { icon: Tree, className: 'bottom-0 right-5 text-yellow-900/20 size-48', animation: { skewY: [0, 2, 0] } },
@@ -198,7 +198,7 @@ export const SCENERIES: Scenery[] = [
     id: 'meadow',
     names: { en: 'Meadow', de: 'Wiese' },
     background: 'bg-linear-to-b from-yellow-300 via-green-200 to-emerald-100',
-    animals: [ANIMALS.mouse, ANIMALS.worm, ANIMALS.snail],
+    animals: [ANIMALS.worm, ANIMALS.snail, ANIMALS.bird],
     decorations: [
       { icon: Rainbow, className: 'top-10 left-1/4 text-white/20 size-64', animation: { opacity: [0.2, 0.5, 0.2] } },
       { icon: Flower, className: 'bottom-10 left-10 text-red-400/30 size-24', animation: { scale: [1, 1.2, 1] } },
