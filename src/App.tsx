@@ -149,20 +149,20 @@ const App: React.FC = () => {
             </div>
           </motion.div>
           
-          <h1 className="text-6xl md:text-7xl font-black mb-12 tracking-tighter drop-shadow-2xl">
-            ANIMAL<br/>FRIENDS
+          <h1 className="text-7xl md:text-9xl font-black mb-12 tracking-tighter drop-shadow-2xl">
+            ANIMALS
           </h1>
 
-          <div className="bg-white/10 backdrop-blur-2xl p-3 rounded-[3.5rem] flex gap-2 mb-10 border border-white/20 shadow-2xl">
+          <div className="inline-flex bg-white/10 backdrop-blur-2xl p-2 rounded-[2.5rem] gap-2 mb-10 border border-white/20 shadow-2xl">
             <button 
               onClick={() => setLanguage('en')}
-              className={`flex-1 py-5 px-6 rounded-[3rem] text-2xl font-black transition-all flex items-center justify-center gap-2 ${language === 'en' ? 'bg-white text-indigo-600 shadow-2xl scale-105' : 'text-white/70 hover:bg-white/5'}`}
+              className={`py-4 px-6 md:px-10 rounded-[2rem] text-lg md:text-2xl font-black transition-all flex items-center justify-center ${language === 'en' ? 'bg-white text-indigo-600 shadow-xl scale-105' : 'text-white/70 hover:bg-white/5'}`}
             >
               ENGLISH
             </button>
             <button 
               onClick={() => setLanguage('de')}
-              className={`flex-1 py-5 px-6 rounded-[3rem] text-2xl font-black transition-all flex items-center justify-center gap-2 ${language === 'de' ? 'bg-white text-indigo-600 shadow-2xl scale-105' : 'text-white/70 hover:bg-white/5'}`}
+              className={`py-4 px-6 md:px-10 rounded-[2rem] text-lg md:text-2xl font-black transition-all flex items-center justify-center ${language === 'de' ? 'bg-white text-indigo-600 shadow-xl scale-105' : 'text-white/70 hover:bg-white/5'}`}
             >
               DEUTSCH
             </button>

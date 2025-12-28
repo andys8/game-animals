@@ -1,9 +1,9 @@
-# Animal Friends 🐾
+# Animals 🐾
 
 A vibrant, educational animal game designed specifically for toddlers (ages 1-2).
 
 ## 🚀 Play Now
-**[Play Animal Friends](https://andys8.github.io/game-animals/)**
+**[Play Animals](https://andys8.github.io/game-animals/)**
 
 ## ✨ Features
 - **Toddler-Friendly UI**: Large, colorful touch targets and simple interactions.
