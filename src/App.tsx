@@ -75,8 +75,8 @@ const App: React.FC = () => {
     const utterance = new SpeechSynthesisUtterance(msg);
     utterance.voice = getBestVoice(language);
     utterance.lang = language === 'de' ? 'de-DE' : 'en-US';
-    utterance.pitch = 1.2;
-    utterance.rate = 0.9;
+    utterance.pitch = 1.0;
+    utterance.rate = 1.0;
     window.speechSynthesis.speak(utterance);
 
     setTimeout(() => {
@@ -95,8 +95,8 @@ const App: React.FC = () => {
     if (bestVoice) utterance.voice = bestVoice;
     
     utterance.lang = language === 'de' ? 'de-DE' : 'en-US';
-    utterance.rate = 0.8;
-    utterance.pitch = 1.1;
+    utterance.rate = 1.0;
+    utterance.pitch = 1.0;
     
     utterance.onend = () => setIsSpeaking(false);
     utterance.onerror = () => setIsSpeaking(false);
