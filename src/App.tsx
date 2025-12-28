@@ -302,17 +302,7 @@ const App: React.FC = () => {
         </AnimatePresence>
       </div>
 
-      {/* Scenery Name */}
-      <div className="absolute bottom-10 left-0 right-0 text-center pointer-events-none z-30">
-        <motion.p 
-          key={currentScenery.id}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 0.2, y: 0 }}
-          className="text-white text-6xl font-black uppercase tracking-[0.5em]"
-        >
-          {currentScenery.names[language]}
-        </motion.p>
-      </div>
+      {/* No scenery name text at the bottom */}
     </div>
   );
 };
