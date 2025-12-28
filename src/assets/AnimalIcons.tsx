@@ -117,19 +117,38 @@ export const Spider = ({ size = 24, ...props }: any) => (
     strokeLinejoin="round"
     {...props}
   >
-    {/* Round Body */}
-    <circle cx="12" cy="13" r="6" fill="currentColor" fillOpacity="0.1" />
-    <circle cx="12" cy="13" r="6" />
-    {/* Legs - Left */}
-    <path d="M7 10l-4-2M6 13l-4 0M7 16l-4 2" />
-    {/* Legs - Right */}
-    <path d="M17 10l4-2M18 13l4 0M17 16l4 2" />
-    {/* Eyes */}
-    <g fill="currentColor" stroke="none">
-      <circle cx="10" cy="11" r="1" />
-      <circle cx="14" cy="11" r="1" />
+    {/* Large round body with depth */}
+    <circle cx="12" cy="13" r="8" fill="currentColor" fillOpacity="0.05" />
+    <circle cx="12" cy="13" r="8" />
+    
+    {/* 8 Characterful Legs with joints */}
+    <g strokeWidth="1.5">
+      {/* Left side */}
+      <path d="M7 8L4 5L2 7" />
+      <path d="M5 11L2 11L1 13" />
+      <path d="M5 15L2 16L2 19" />
+      <path d="M7 18L5 21L7 23" />
+      {/* Right side */}
+      <path d="M17 8L20 5L22 7" />
+      <path d="M19 11L22 11L23 13" />
+      <path d="M19 15L22 16L22 19" />
+      <path d="M17 18L19 21L17 23" />
     </g>
-    {/* Smile */}
-    <path d="M10 15c0.5 1 3.5 1 4 0" strokeWidth="1.5" />
+
+    {/* Expressive eyes (consistent with Frog/Owl) */}
+    <circle cx="9" cy="10" r="2.5" fill="white" stroke="currentColor" />
+    <circle cx="15" cy="10" r="2.5" fill="white" stroke="currentColor" />
+    <circle cx="9" cy="10" r="1" fill="currentColor" stroke="none" />
+    <circle cx="15" cy="10" r="1" fill="currentColor" stroke="none" />
+    
+    {/* Eye Highlights */}
+    <circle cx="8.5" cy="9.2" r="0.4" fill="white" stroke="none" />
+    <circle cx="14.5" cy="9.2" r="0.4" fill="white" stroke="none" />
+    
+    {/* Friendly smile */}
+    <path d="M9 14c1 2 5 2 6 0" strokeWidth="2" />
+    
+    {/* Back markings for extra detail */}
+    <circle cx="12" cy="18" r="1" fill="currentColor" fillOpacity="0.2" stroke="none" />
   </svg>
 );
