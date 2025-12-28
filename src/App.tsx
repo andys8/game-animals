@@ -40,8 +40,8 @@ const App: React.FC = () => {
   const animalOffsets = useMemo(() => {
     if (!currentScenery) return [];
     return currentScenery.animals.map(() => ({
-      x: (Math.random() * 40 - 20),
-      y: (Math.random() * 30 - 15),
+      x: (Math.random() * 20), // Bias towards the right (more room on top-left)
+      y: (Math.random() * 20 + 10), // Bias towards the bottom
       duration: (Math.random() * 2 + 4) 
     }));
   }, [currentSceneryIndex, positionSeed]);
@@ -276,7 +276,7 @@ const App: React.FC = () => {
       </div>
 
       {/* Animals Area */}
-      <div className="flex-1 relative flex items-center justify-center z-20 overflow-visible mt-12">
+      <div className="flex-1 relative flex items-center justify-center z-20 overflow-visible mt-32 md:mt-40">
         <AnimatePresence mode="wait">
           <motion.div 
             key={`${currentScenery.id}-${positionSeed}`}
