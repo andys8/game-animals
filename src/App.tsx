@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SCENERIES } from './game/animals';
 import type { Animal, Language } from './game/animals';
-import { Star, RefreshCw, Play, Check } from 'lucide-react';
+import { Star, RefreshCw, Play, Check, Trophy } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 const App: React.FC = () => {
@@ -11,15 +11,15 @@ const App: React.FC = () => {
   const [currentSceneryIndex, setCurrentSceneryIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [clickedAnimalId, setClickedAnimalId] = useState<string | null>(null);
+  const [showMilestone, setShowMilestone] = useState(false);
 
   const currentScenery = SCENERIES[currentSceneryIndex];
 
   const animalPositions = useMemo(() => {
-    // 3 fixed but slightly offset areas to avoid overlaps
     return [
-      { x: -5, y: -5 },
-      { x: 5, y: 5 },
-      { x: 0, y: -10 },
+      { x: -8, y: -5 },
+      { x: 8, y: 5 },
+      { x: 0, y: -12 },
     ];
   }, [currentSceneryIndex]);
 
@@ -30,26 +30,49 @@ const App: React.FC = () => {
     }
   };
 
-  const playSound = (animal: Animal) => {
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(animal.names[language]);
+  const triggerMilestone = () => {
+    setShowMilestone(true);
+    confetti({
+      particleCount: 200,
+      spread: 100,
+      origin: { y: 0.5 },
+      colors: ['#FF6B6B', '#4ECDC4', '#FFE66D', '#FF9F43', '#A29BFE']
+    });
+
+    // Play a happy sound or just speak "Yay!"
+    const msg = language === 'en' ? 'Wonderful!' : 'Super gemacht!';
+    const utterance = new SpeechSynthesisUtterance(msg);
     utterance.lang = language === 'de' ? 'de-DE' : 'en-US';
-    utterance.rate = 0.75; // Slower for clarity
-    utterance.pitch = 1.3; // Higher/Friendlier for toddlers
+    utterance.pitch = 1.5;
     window.speechSynthesis.speak(utterance);
 
-    setClickedAnimalId(animal.id);
-    setTimeout(() => setClickedAnimalId(null), 1200);
+    setTimeout(() => {
+      setShowMilestone(false);
+      setCurrentSceneryIndex((prev) => (prev + 1) % SCENERIES.length);
+    }, 2500);
+  };
 
-    setScore(s => s + 1);
+  const playSound = (animal: Animal) => {
+    // For toddlers: Rapid tapping should restart the sound immediately
+    // but we add a tiny gate to prevent internal browser audio queue crashes
+    window.speechSynthesis.cancel();
+    
+    const utterance = new SpeechSynthesisUtterance(animal.names[language]);
+    utterance.lang = language === 'de' ? 'de-DE' : 'en-US';
+    utterance.rate = 0.8;
+    utterance.pitch = 1.3; 
+    window.speechSynthesis.speak(utterance);
 
-    if ((score + 1) % 5 === 0) {
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 },
-        colors: ['#FF6B6B', '#4ECDC4', '#FFE66D', '#FF9F43']
-      });
+    // Visual feedback logic
+    setClickedAnimalId(null); // Reset first to re-trigger animation if same animal
+    setTimeout(() => setClickedAnimalId(animal.id), 10);
+    
+    const newScore = score + 1;
+    setScore(newScore);
+
+    // Every 10 points is a level clear / milestone
+    if (newScore > 0 && newScore % 10 === 0) {
+      triggerMilestone();
     }
   };
 
@@ -66,18 +89,17 @@ const App: React.FC = () => {
           className="text-center w-full max-w-md"
         >
           <motion.div 
-            animate={{ y: [0, -20, 0] }} 
+            animate={{ y: [0, -20, 0], rotate: [0, 5, -5, 0] }} 
             transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
             className="flex justify-center mb-8"
           >
             <Star size={120} className="text-yellow-300 fill-yellow-300 drop-shadow-[0_0_30px_rgba(253,224,71,0.6)]" />
           </motion.div>
           
-          <h1 className="text-6xl md:text-7xl font-black mb-12 tracking-tighter drop-shadow-2xl">
+          <h1 className="text-6xl md:text-7xl font-black mb-12 tracking-tighter drop-shadow-2xl italic">
             ANIMAL<br/>FRIENDS
           </h1>
 
-          {/* Language Selection */}
           <div className="bg-white/20 backdrop-blur-xl p-4 rounded-[3rem] flex gap-2 mb-10 border-2 border-white/30">
             <button 
               onClick={() => setLanguage('en')}
@@ -99,7 +121,7 @@ const App: React.FC = () => {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             onClick={startGame}
-            className="bg-brand-accent text-orange-600 w-full py-8 rounded-[3rem] text-5xl font-black shadow-[0_20px_50px_rgba(0,0,0,0.3)] flex items-center justify-center gap-6 border-b-[12px] border-orange-700/30"
+            className="bg-brand-accent text-orange-600 w-full py-8 rounded-[3.5rem] text-5xl font-black shadow-[0_20px_50px_rgba(0,0,0,0.3)] flex items-center justify-center gap-6 border-b-[12px] border-orange-700/30"
           >
             <Play size={60} fill="currentColor" />
             {language === 'en' ? 'PLAY' : 'START'}
@@ -111,6 +133,27 @@ const App: React.FC = () => {
 
   return (
     <div className={`relative w-full h-screen overflow-hidden ${currentScenery.background} transition-all duration-1000 flex flex-col`}>
+      <AnimatePresence>
+        {showMilestone && (
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.5 }}
+            className="absolute inset-0 z-[100] flex flex-col items-center justify-center bg-white/40 backdrop-blur-md"
+          >
+            <motion.div
+              animate={{ rotate: 360, scale: [1, 1.2, 1] }}
+              transition={{ repeat: Infinity, duration: 2 }}
+            >
+              <Trophy size={200} className="text-yellow-500 fill-yellow-400 drop-shadow-2xl" />
+            </motion.div>
+            <h2 className="text-7xl font-black text-indigo-600 mt-10 drop-shadow-lg uppercase tracking-widest">
+              {language === 'en' ? 'Level Up!' : 'Super!'}
+            </h2>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Dynamic Scenery Decorations */}
       {currentScenery.decorations.map((dec, i) => {
         const Icon = dec.icon;
@@ -199,29 +242,31 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ animal, onClick, isClicked, off
   return (
     <motion.button
       style={{ x: `${offset.x}%`, y: `${offset.y}%` }}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.85 }}
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.9 }}
       onClick={onClick}
       className={`
         relative bg-white rounded-[4.5rem] p-8 md:p-12
-        shadow-[0_40px_80px_rgba(0,0,0,0.15)] 
-        flex flex-col items-center justify-center 
+        shadow-[0_40px_80px_rgba(0,0,0,0.12)] 
+        flex flex-col items-center justify-between
         w-52 h-52 md:w-72 md:h-72 lg:w-80 lg:h-80
         border-b-[16px] border-gray-200/60
         ${isClicked ? 'ring-[20px] ring-brand-primary/40 !scale-110 !z-50' : 'z-10'}
         transition-all duration-300
       `}
     >
-      <div className="flex flex-col items-center justify-center flex-1 w-full">
+      <div className="flex-1 flex items-center justify-center w-full">
         <motion.div
+          key={isClicked ? 'clicked' : 'idle'}
+          initial={false}
           animate={isClicked ? {
             rotate: [0, -20, 20, -20, 20, 0],
             scale: [1, 1.3, 1],
           } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5, type: "spring", stiffness: 300 }}
           className={`${animal.color} flex items-center justify-center`}
         >
-          <Icon size="100%" className="w-28 h-28 md:w-40 md:h-40 lg:w-48 lg:h-48" strokeWidth={2.5} />
+          <Icon size="100%" className="w-28 h-28 md:w-44 md:h-44 lg:w-52 lg:h-52" strokeWidth={2.5} />
         </motion.div>
       </div>
       
@@ -238,7 +283,7 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ animal, onClick, isClicked, off
         )}
       </AnimatePresence>
 
-      <div className={`mt-2 md:mt-4 text-lg md:text-xl font-black tracking-tight transition-colors duration-300 ${isClicked ? 'text-brand-primary' : 'text-gray-300'}`}>
+      <div className={`mb-2 md:mb-4 text-xl md:text-2xl font-black tracking-tight transition-colors duration-300 ${isClicked ? 'text-brand-primary' : 'text-gray-300'}`}>
         {animal.names[language]}
       </div>
     </motion.button>
