@@ -365,11 +365,13 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ animal, onClick, isClicked, off
         {isClicked && (
           <motion.div
             initial={{ opacity: 0, scale: 0.5, y: 0 }}
-            animate={{ opacity: 1, scale: 1.5, y: -160 }}
+            animate={{ opacity: 1, scale: 1.2, y: -90 }}
             exit={{ opacity: 0, scale: 0.5 }}
-            className={`absolute text-5xl md:text-7xl font-black ${themeColor} drop-shadow-[0_10px_30px_rgba(0,0,0,0.2)] z-50 pointer-events-none whitespace-nowrap`}
+            className={`absolute z-50 pointer-events-none whitespace-nowrap bg-white/95 px-6 py-2 rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.2)] border-4 ${ringColor.replace('ring-', 'border-')}`}
           >
-            {animal.soundEmojis[language]}
+            <span className={`text-4xl md:text-6xl font-black ${themeColor}`}>
+              {animal.soundEmojis[language]}
+            </span>
           </motion.div>
         )}
       </AnimatePresence>
