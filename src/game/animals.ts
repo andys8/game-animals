@@ -5,8 +5,7 @@ import {
   Trees as Tree, Flower, Waves,
   Shell, Snail, Leaf,
   Rat as Mouse,
-  PawPrint,
-  Heart
+  Worm
 } from 'lucide-react';
 
 export type Language = 'en' | 'de';
@@ -104,19 +103,19 @@ export const ANIMALS: Record<string, Animal> = {
     color: 'text-gray-400',
     soundEmojis: { en: 'Squeak!', de: 'Piep!' }
   },
-  wild: {
-    id: 'wild',
-    names: { en: 'Wild Animal', de: 'Wildtier' },
-    icon: PawPrint,
-    color: 'text-yellow-700',
-    soundEmojis: { en: 'Roar!', de: 'Roooar!' }
+  worm: {
+    id: 'worm',
+    names: { en: 'Worm', de: 'Wurm' },
+    icon: Worm,
+    color: 'text-rose-400',
+    soundEmojis: { en: 'Wiggle!', de: 'Wackel!' }
   },
-  friend: {
-    id: 'friend',
-    names: { en: 'Friend', de: 'Freund' },
-    icon: Heart,
-    color: 'text-red-400',
-    soundEmojis: { en: 'Love!', de: 'Liebe!' }
+  beetle: {
+    id: 'beetle',
+    names: { en: 'Beetle', de: 'Käfer' },
+    icon: Bug,
+    color: 'text-emerald-800',
+    soundEmojis: { en: 'Buzz!', de: 'Brumm!' }
   }
 };
 
@@ -158,7 +157,7 @@ export const SCENERIES: Scenery[] = [
     id: 'park',
     names: { en: 'Park', de: 'Park' },
     background: 'bg-linear-to-b from-yellow-300 via-orange-200 to-red-100',
-    animals: [ANIMALS.mouse, ANIMALS.wild, ANIMALS.friend],
+    animals: [ANIMALS.mouse, ANIMALS.worm, ANIMALS.beetle],
     decorations: [
       { icon: Sun, className: 'top-10 left-10 text-orange-500/40 size-40', animation: { scale: [1, 1.1, 1] } },
       { icon: Tree, className: 'bottom-0 right-20 text-yellow-900/20 size-56', animation: { skewY: [0, 2, 0] } },
