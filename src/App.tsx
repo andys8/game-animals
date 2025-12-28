@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SCENERIES } from './game/animals';
 import type { Animal, Language } from './game/animals';
-import { Star, RefreshCw, Play, Globe } from 'lucide-react';
+import { Star, RefreshCw, Play, Check } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 const App: React.FC = () => {
@@ -15,16 +15,16 @@ const App: React.FC = () => {
   const currentScenery = SCENERIES[currentSceneryIndex];
 
   const animalPositions = useMemo(() => {
-    return currentScenery.animals.map(() => ({
-      x: Math.random() * 20 - 10,
-      y: Math.random() * 10 - 5,
-    }));
+    // 3 fixed but slightly offset areas to avoid overlaps
+    return [
+      { x: -5, y: -5 },
+      { x: 5, y: 5 },
+      { x: 0, y: -10 },
+    ];
   }, [currentSceneryIndex]);
 
-  const startGame = (lang: Language) => {
-    setLanguage(lang);
+  const startGame = () => {
     setGameState('playing');
-    // Automatic fullscreen
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen().catch(() => {});
     }
@@ -34,8 +34,8 @@ const App: React.FC = () => {
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(animal.names[language]);
     utterance.lang = language === 'de' ? 'de-DE' : 'en-US';
-    utterance.rate = 0.8;
-    utterance.pitch = 1.2; 
+    utterance.rate = 0.75; // Slower for clarity
+    utterance.pitch = 1.3; // Higher/Friendlier for toddlers
     window.speechSynthesis.speak(utterance);
 
     setClickedAnimalId(animal.id);
@@ -59,39 +59,51 @@ const App: React.FC = () => {
 
   if (gameState === 'intro') {
     return (
-      <div className="w-full h-screen bg-linear-to-br from-brand-secondary to-blue-600 flex flex-col items-center justify-center p-6 text-white overflow-hidden">
+      <div className="w-full h-screen bg-linear-to-br from-indigo-500 via-purple-500 to-pink-500 flex flex-col items-center justify-center p-6 text-white overflow-hidden">
         <motion.div 
-          initial={{ scale: 0.5, opacity: 0 }}
+          initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="text-center"
+          className="text-center w-full max-w-md"
         >
-          <div className="flex gap-4 justify-center mb-8">
-            <motion.div animate={{ rotate: [0, 10, -10, 0] }} transition={{ repeat: Infinity, duration: 2 }}>
-              <Star size={100} className="text-brand-accent fill-brand-accent shadow-2xl" />
-            </motion.div>
-          </div>
-          <h1 className="text-7xl font-black mb-12 tracking-tighter drop-shadow-lg text-white">ANIMAL FRIENDS</h1>
+          <motion.div 
+            animate={{ y: [0, -20, 0] }} 
+            transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+            className="flex justify-center mb-8"
+          >
+            <Star size={120} className="text-yellow-300 fill-yellow-300 drop-shadow-[0_0_30px_rgba(253,224,71,0.6)]" />
+          </motion.div>
           
-          <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={() => startGame('en')}
-              className="bg-white text-brand-secondary px-10 py-6 rounded-full text-3xl font-black shadow-2xl flex items-center gap-4 min-w-[280px]"
+          <h1 className="text-6xl md:text-7xl font-black mb-12 tracking-tighter drop-shadow-2xl">
+            ANIMAL<br/>FRIENDS
+          </h1>
+
+          {/* Language Selection */}
+          <div className="bg-white/20 backdrop-blur-xl p-4 rounded-[3rem] flex gap-2 mb-10 border-2 border-white/30">
+            <button 
+              onClick={() => setLanguage('en')}
+              className={`flex-1 py-4 px-6 rounded-[2rem] text-2xl font-black transition-all flex items-center justify-center gap-2 ${language === 'en' ? 'bg-white text-indigo-600 shadow-xl scale-105' : 'text-white/80 hover:bg-white/10'}`}
             >
-              <Play size={40} fill="currentColor" />
+              {language === 'en' && <Check size={24} strokeWidth={4} />}
               ENGLISH
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={() => startGame('de')}
-              className="bg-brand-accent text-orange-600 px-10 py-6 rounded-full text-3xl font-black shadow-2xl flex items-center gap-4 min-w-[280px]"
+            </button>
+            <button 
+              onClick={() => setLanguage('de')}
+              className={`flex-1 py-4 px-6 rounded-[2rem] text-2xl font-black transition-all flex items-center justify-center gap-2 ${language === 'de' ? 'bg-white text-indigo-600 shadow-xl scale-105' : 'text-white/80 hover:bg-white/10'}`}
             >
-              <Globe size={40} />
+              {language === 'de' && <Check size={24} strokeWidth={4} />}
               DEUTSCH
-            </motion.button>
+            </button>
           </div>
+
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={startGame}
+            className="bg-brand-accent text-orange-600 w-full py-8 rounded-[3rem] text-5xl font-black shadow-[0_20px_50px_rgba(0,0,0,0.3)] flex items-center justify-center gap-6 border-b-[12px] border-orange-700/30"
+          >
+            <Play size={60} fill="currentColor" />
+            {language === 'en' ? 'PLAY' : 'START'}
+          </motion.button>
         </motion.div>
       </div>
     );
@@ -107,9 +119,9 @@ const App: React.FC = () => {
             key={`${currentScenery.id}-dec-${i}`}
             className={`absolute pointer-events-none opacity-30 ${dec.className}`}
             animate={dec.animation}
-            transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
+            transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
           >
-            <Icon size={150} />
+            <Icon size={180} />
           </motion.div>
         );
       })}
@@ -120,29 +132,29 @@ const App: React.FC = () => {
           key={score}
           initial={{ scale: 0.8, y: -20 }}
           animate={{ scale: 1, y: 0 }}
-          className="bg-white/90 backdrop-blur-md px-8 py-4 rounded-3xl shadow-2xl flex items-center gap-4 border-4 border-brand-accent pointer-events-auto"
+          className="bg-white/95 px-8 py-4 rounded-[2.5rem] shadow-2xl flex items-center gap-4 border-4 border-brand-accent pointer-events-auto"
         >
-          <Star className="text-yellow-500 fill-yellow-500" size={40} />
-          <span className="text-4xl font-black text-gray-800">{score}</span>
+          <Star className="text-yellow-500 fill-yellow-500" size={44} />
+          <span className="text-5xl font-black text-gray-800 tracking-tighter">{score}</span>
         </motion.div>
         
         <button 
           onClick={nextScenery}
-          className="bg-white/90 backdrop-blur-md p-6 rounded-3xl shadow-2xl text-brand-primary hover:scale-110 active:scale-90 transition-all border-4 border-brand-primary/20 pointer-events-auto"
+          className="bg-white/95 p-6 rounded-[2.5rem] shadow-2xl text-brand-primary hover:scale-110 active:scale-90 transition-all border-4 border-brand-primary/20 pointer-events-auto"
         >
-          <RefreshCw size={40} strokeWidth={3} />
+          <RefreshCw size={44} strokeWidth={4} />
         </button>
       </div>
 
       {/* Animals Area */}
-      <div className="flex-1 relative flex items-center justify-center z-20">
+      <div className="flex-1 relative flex items-center justify-center z-20 overflow-visible">
         <AnimatePresence mode="wait">
           <motion.div 
             key={currentScenery.id}
-            initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
-            animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            exit={{ opacity: 0, scale: 1.2, rotate: 5 }}
-            className="w-full h-full flex flex-wrap items-center justify-center p-12 gap-10 md:gap-20"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.1 }}
+            className="w-full max-w-6xl flex flex-wrap items-center justify-center px-6 gap-8 md:gap-12 lg:gap-20"
           >
             {currentScenery.animals.map((animal, idx) => (
               <AnimalCard 
@@ -159,12 +171,12 @@ const App: React.FC = () => {
       </div>
 
       {/* Scenery Name */}
-      <div className="absolute bottom-8 left-0 right-0 text-center pointer-events-none z-30">
+      <div className="absolute bottom-10 left-0 right-0 text-center pointer-events-none z-30">
         <motion.p 
           key={currentScenery.id}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.4 }}
-          className="text-white text-4xl font-black uppercase tracking-[0.5em]"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 0.3, y: 0 }}
+          className="text-white text-5xl font-black uppercase tracking-[0.4em]"
         >
           {currentScenery.names[language]}
         </motion.p>
@@ -191,40 +203,42 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ animal, onClick, isClicked, off
       whileTap={{ scale: 0.85 }}
       onClick={onClick}
       className={`
-        relative bg-white rounded-[4rem] p-10 md:p-14
-        shadow-[0_30px_60px_rgba(0,0,0,0.15)] 
+        relative bg-white rounded-[4.5rem] p-8 md:p-12
+        shadow-[0_40px_80px_rgba(0,0,0,0.15)] 
         flex flex-col items-center justify-center 
-        w-52 h-52 md:w-72 md:h-72
-        border-b-[16px] border-gray-200/50
-        ${isClicked ? 'ring-[16px] ring-brand-primary/40 !scale-110 !rotate-0' : ''}
+        w-52 h-52 md:w-72 md:h-72 lg:w-80 lg:h-80
+        border-b-[16px] border-gray-200/60
+        ${isClicked ? 'ring-[20px] ring-brand-primary/40 !scale-110 !z-50' : 'z-10'}
         transition-all duration-300
       `}
     >
-      <motion.div
-        animate={isClicked ? {
-          rotate: [0, -25, 25, -25, 25, 0],
-          scale: [1, 1.4, 1],
-        } : {}}
-        transition={{ duration: 0.6 }}
-        className={`${animal.color} mb-6`}
-      >
-        <Icon size={120} md:size={160} strokeWidth={2.5} />
-      </motion.div>
+      <div className="flex flex-col items-center justify-center flex-1 w-full">
+        <motion.div
+          animate={isClicked ? {
+            rotate: [0, -20, 20, -20, 20, 0],
+            scale: [1, 1.3, 1],
+          } : {}}
+          transition={{ duration: 0.6 }}
+          className={`${animal.color} flex items-center justify-center`}
+        >
+          <Icon size="100%" className="w-28 h-28 md:w-40 md:h-40 lg:w-48 lg:h-48" strokeWidth={2.5} />
+        </motion.div>
+      </div>
       
       <AnimatePresence>
         {isClicked && (
           <motion.div
             initial={{ opacity: 0, scale: 0.5, y: 0 }}
-            animate={{ opacity: 1, scale: 2, y: -140 }}
+            animate={{ opacity: 1, scale: 2, y: -160 }}
             exit={{ opacity: 0, scale: 0.5 }}
-            className="absolute text-5xl font-black text-brand-primary drop-shadow-2xl z-50 pointer-events-none whitespace-nowrap"
+            className="absolute text-6xl font-black text-brand-primary drop-shadow-[0_10px_30px_rgba(0,0,0,0.2)] z-50 pointer-events-none whitespace-nowrap"
           >
             {animal.soundEmojis[language]}
           </motion.div>
         )}
       </AnimatePresence>
 
-      <div className={`text-xl md:text-2xl font-black tracking-tight transition-colors duration-300 ${isClicked ? 'text-brand-primary' : 'text-gray-400'}`}>
+      <div className={`mt-2 md:mt-4 text-lg md:text-xl font-black tracking-tight transition-colors duration-300 ${isClicked ? 'text-brand-primary' : 'text-gray-300'}`}>
         {animal.names[language]}
       </div>
     </motion.button>
