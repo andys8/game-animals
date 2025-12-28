@@ -117,31 +117,29 @@ export const Spider = ({ size = 24, ...props }: any) => (
     strokeLinejoin="round"
     {...props}
   >
-    {/* Abdomen (Back part) */}
-    <ellipse cx="12" cy="15" rx="6" ry="7" fill="currentColor" fillOpacity="0.1" />
-    <ellipse cx="12" cy="15" rx="6" ry="7" />
-    
-    {/* Cephalothorax (Front part) */}
-    <circle cx="12" cy="8" r="3.5" fill="currentColor" fillOpacity="0.05" />
-    <circle cx="12" cy="8" r="3.5" />
-
-    {/* 8 Legs with spidery bends */}
+    {/* 8 Legs behind the body */}
     <g strokeWidth="1.8">
-      {/* Front pair */}
-      <path d="M10 7L7 4L3 5" />
-      <path d="M14 7l3-3l4 1" />
-      
-      {/* Mid-front pair */}
-      <path d="M9 8L5 7L2 10" />
-      <path d="M15 8l4-1l3 3" />
-      
-      {/* Mid-back pair */}
-      <path d="M9 10L5 12L2 16" />
-      <path d="M15 10l4 2l3 4" />
-      
-      {/* Back pair */}
-      <path d="M10 11L8 16L5 21" />
-      <path d="M14 11l2 5l3 5" />
+      {/* Front legs */}
+      <path d="M10 8L6 4L2 5" />
+      <path d="M14 8l4-4l4 1" />
+      {/* Mid-front legs */}
+      <path d="M9 10L4 9L1 12" />
+      <path d="M15 10l5-1l3 3" />
+      {/* Mid-back legs */}
+      <path d="M9 12L4 14L2 18" />
+      <path d="M15 12l5 2l2 4" />
+      {/* Back legs */}
+      <path d="M10 14L7 19L4 23" />
+      <path d="M14 14l3 5l3 4" />
     </g>
+
+    {/* Abdomen (Large back part) with solid fill */}
+    <ellipse cx="12" cy="15" rx="6.5" ry="7.5" fill="white" stroke="currentColor" />
+    {/* Cephalothorax (Small front part) with solid fill */}
+    <circle cx="12" cy="8.5" r="4" fill="white" stroke="currentColor" />
+    
+    {/* Decorative pattern on the back for more detail */}
+    <circle cx="12" cy="15" r="3" stroke="currentColor" strokeWidth="1" strokeOpacity="0.1" />
+    <path d="M12 12v6M9 15h6" stroke="currentColor" strokeWidth="1" strokeOpacity="0.1" />
   </svg>
 );
