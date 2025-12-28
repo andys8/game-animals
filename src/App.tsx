@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useCallback } from 'react';
+import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SCENERIES } from './game/animals';
 import type { Animal, Language } from './game/animals';
@@ -15,6 +15,7 @@ const App: React.FC = () => {
   const [positionSeed, setPositionSeed] = useState(0);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [availableVoices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const currentScenery = SCENERIES[currentSceneryIndex];
 
@@ -30,8 +31,6 @@ const App: React.FC = () => {
 
   const getBestVoice = useCallback((lang: Language) => {
     const langVoices = availableVoices.filter(v => v.lang.startsWith(lang === 'de' ? 'de' : 'en'));
-    
-    // Prefer Google or Premium voices which sound much better
     return langVoices.find(v => v.name.includes('Google') || v.name.includes('Premium') || v.name.includes('Natural')) 
            || langVoices[0] 
            || null;
@@ -55,7 +54,6 @@ const App: React.FC = () => {
   const triggerMilestone = () => {
     setShowMilestone(true);
     
-    // Multi-stage confetti
     const duration = 3 * 1000;
     const animationEnd = Date.now() + duration;
     const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
@@ -70,7 +68,7 @@ const App: React.FC = () => {
       confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
     }, 250);
 
-    const msg = language === 'en' ? 'Incredible! You did it!' : 'Unglaublich! Gut gemacht!';
+    const msg = language === 'en' ? 'Wonderful! You did it!' : 'Unglaublich! Gut gemacht!';
     const utterance = new SpeechSynthesisUtterance(msg);
     utterance.voice = getBestVoice(language);
     utterance.lang = language === 'de' ? 'de-DE' : 'en-US';
@@ -85,36 +83,59 @@ const App: React.FC = () => {
     }, 3500);
   };
 
-  const playSound = (animal: Animal) => {
-    if (isSpeaking || showMilestone) return;
-
-    setIsSpeaking(true);
+  const speakAnimalName = (animal: Animal) => {
     const utterance = new SpeechSynthesisUtterance(animal.names[language]);
     const bestVoice = getBestVoice(language);
     if (bestVoice) utterance.voice = bestVoice;
-    
     utterance.lang = language === 'de' ? 'de-DE' : 'en-US';
     utterance.rate = 1.0;
     utterance.pitch = 1.0;
     
     utterance.onend = () => setIsSpeaking(false);
     utterance.onerror = () => setIsSpeaking(false);
-    setTimeout(() => setIsSpeaking(false), 1500);
+    setTimeout(() => setIsSpeaking(false), 1500); // Safety fallback
 
     window.speechSynthesis.speak(utterance);
+  };
 
+  const playSound = (animal: Animal) => {
+    if (isSpeaking || showMilestone) return;
+
+    setIsSpeaking(true);
     setClickedAnimalId(null);
     setTimeout(() => {
       setClickedAnimalId(animal.id);
-      // Clear after 1.2 seconds so it doesn't hang
-      setTimeout(() => setClickedAnimalId(null), 1200);
+      setTimeout(() => setClickedAnimalId(null), 1500);
     }, 10);
-    
+
     const newScore = score + 1;
     setScore(newScore);
 
+    if (animal.soundFile) {
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+      const audio = new Audio(`${import.meta.env.BASE_URL}assets/sounds/${animal.soundFile}`);
+      audioRef.current = audio;
+      audio.play().catch(() => {
+        // If audio fails (e.g. not found), just speak
+        speakAnimalName(animal);
+      });
+      audio.onended = () => {
+        speakAnimalName(animal);
+      };
+      // Fallback if audio is too long or stuck
+      setTimeout(() => {
+        if (isSpeaking && audioRef.current === audio) {
+          speakAnimalName(animal);
+        }
+      }, 2000);
+    } else {
+      speakAnimalName(animal);
+    }
+
     if (newScore > 0 && newScore % 10 === 0) {
-      triggerMilestone();
+      setTimeout(() => triggerMilestone(), 1000);
     }
   };
 
