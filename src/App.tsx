@@ -105,7 +105,11 @@ const App: React.FC = () => {
     window.speechSynthesis.speak(utterance);
 
     setClickedAnimalId(null);
-    setTimeout(() => setClickedAnimalId(animal.id), 10);
+    setTimeout(() => {
+      setClickedAnimalId(animal.id);
+      // Clear after 1.2 seconds so it doesn't hang
+      setTimeout(() => setClickedAnimalId(null), 1200);
+    }, 10);
     
     const newScore = score + 1;
     setScore(newScore);
@@ -118,6 +122,7 @@ const App: React.FC = () => {
   const nextScenery = () => {
     setCurrentSceneryIndex((prev) => (prev + 1) % SCENERIES.length);
     setPositionSeed(s => s + 1);
+    setClickedAnimalId(null);
   };
 
   if (gameState === 'intro') {
