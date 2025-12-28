@@ -12,6 +12,7 @@ const App: React.FC = () => {
   const [score, setScore] = useState(0);
   const [clickedAnimalId, setClickedAnimalId] = useState<string | null>(null);
   const [showMilestone, setShowMilestone] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
 
   const currentScenery = SCENERIES[currentSceneryIndex];
 
@@ -53,14 +54,21 @@ const App: React.FC = () => {
   };
 
   const playSound = (animal: Animal) => {
-    // For toddlers: Rapid tapping should restart the sound immediately
-    // but we add a tiny gate to prevent internal browser audio queue crashes
-    window.speechSynthesis.cancel();
+    if (isSpeaking || showMilestone) return;
+
+    setIsSpeaking(true);
     
     const utterance = new SpeechSynthesisUtterance(animal.names[language]);
     utterance.lang = language === 'de' ? 'de-DE' : 'en-US';
-    utterance.rate = 0.8;
-    utterance.pitch = 1.3; 
+    utterance.rate = 0.75; // Slower for clarity
+    utterance.pitch = 1.3; // Higher/Friendlier for toddlers
+    
+    utterance.onend = () => setIsSpeaking(false);
+    utterance.onerror = () => setIsSpeaking(false);
+    
+    // Fallback: in some browsers onend might not fire reliably
+    setTimeout(() => setIsSpeaking(false), 2000);
+
     window.speechSynthesis.speak(utterance);
 
     // Visual feedback logic
