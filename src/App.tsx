@@ -256,22 +256,22 @@ const App: React.FC = () => {
       })}
 
       {/* UI Overlay */}
-      <div className="absolute top-6 left-6 right-6 flex justify-between items-start z-50 pointer-events-none">
+      <div className="absolute top-6 left-6 right-6 flex justify-between items-center z-50 pointer-events-none">
         <motion.div 
           key={score}
           initial={{ scale: 0.8, y: -20 }}
           animate={{ scale: 1, y: 0 }}
-          className="bg-white/95 px-8 py-4 rounded-[2.5rem] shadow-2xl flex items-center gap-4 border-4 border-brand-accent pointer-events-auto"
+          className="bg-white/95 h-[88px] px-8 rounded-[2.5rem] shadow-2xl flex items-center gap-4 border-4 border-brand-accent pointer-events-auto"
         >
-          <Star className="text-yellow-500 fill-yellow-500" size={44} />
-          <span className="text-5xl font-black text-gray-800 tracking-tighter">{score}</span>
+          <Star className="text-yellow-500 fill-yellow-500" size={40} />
+          <span className="text-5xl font-black text-gray-800 tracking-tighter leading-none">{score}</span>
         </motion.div>
         
         <button 
           onClick={nextScenery}
-          className="bg-white/95 p-6 rounded-[2.5rem] shadow-2xl text-brand-primary hover:scale-110 active:scale-90 transition-all border-4 border-brand-primary/20 pointer-events-auto"
+          className="bg-white/95 h-[88px] w-[88px] rounded-[2.5rem] shadow-2xl text-brand-primary hover:scale-110 active:scale-90 transition-all border-4 border-brand-primary/20 pointer-events-auto flex items-center justify-center"
         >
-          <RefreshCw size={44} strokeWidth={4} />
+          <RefreshCw size={40} strokeWidth={4} />
         </button>
       </div>
 
