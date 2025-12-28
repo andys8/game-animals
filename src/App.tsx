@@ -13,9 +13,11 @@ const App: React.FC = () => {
   const [clickedAnimalId, setClickedAnimalId] = useState<string | null>(null);
   const [showMilestone, setShowMilestone] = useState(false);
   const [positionSeed, setPositionSeed] = useState(0);
-  const [isSpeaking, setIsSpeaking] = useState(false);
   const [availableVoices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
+  
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const clickTimeoutRef = useRef<any>(null);
+  const speakingTimeoutRef = useRef<any>(null);
 
   const currentScenery = SCENERIES[currentSceneryIndex];
 
@@ -53,7 +55,13 @@ const App: React.FC = () => {
 
   const triggerMilestone = () => {
     setShowMilestone(true);
+    window.speechSynthesis.cancel();
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.onended = null;
+    }
     
+    // Multi-stage confetti
     const duration = 3 * 1000;
     const animationEnd = Date.now() + duration;
     const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
@@ -68,7 +76,7 @@ const App: React.FC = () => {
       confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
     }, 250);
 
-    const msg = language === 'en' ? 'Wonderful! You did it!' : 'Unglaublich! Gut gemacht!';
+    const msg = language === 'en' ? 'Incredible! You did it!' : 'Unglaublich! Gut gemacht!';
     const utterance = new SpeechSynthesisUtterance(msg);
     utterance.voice = getBestVoice(language);
     utterance.lang = language === 'de' ? 'de-DE' : 'en-US';
@@ -91,21 +99,28 @@ const App: React.FC = () => {
     utterance.rate = 1.0;
     utterance.pitch = 1.0;
     
-    utterance.onend = () => setIsSpeaking(false);
-    utterance.onerror = () => setIsSpeaking(false);
-    setTimeout(() => setIsSpeaking(false), 1500); // Safety fallback
+    if (speakingTimeoutRef.current) clearTimeout(speakingTimeoutRef.current);
 
     window.speechSynthesis.speak(utterance);
   };
 
   const playSound = (animal: Animal) => {
-    if (isSpeaking || showMilestone) return;
+    if (showMilestone) return;
 
-    setIsSpeaking(true);
+    // Interrupt previous sound/speech immediately
+    window.speechSynthesis.cancel();
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.onended = null;
+    }
+
     setClickedAnimalId(null);
+    if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
+    
     setTimeout(() => {
       setClickedAnimalId(animal.id);
-      setTimeout(() => setClickedAnimalId(null), 2000);
+      if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
+      clickTimeoutRef.current = setTimeout(() => setClickedAnimalId(null), 2000);
     }, 10);
 
     const newScore = score + 1;
@@ -116,11 +131,6 @@ const App: React.FC = () => {
     };
 
     if (animal.soundFile) {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.onended = null;
-      }
-      
       const audioPath = `${import.meta.env.BASE_URL}assets/sounds/${animal.soundFile}`.replace(/\/+/g, '/');
       const audio = new Audio(audioPath);
       audioRef.current = audio;
@@ -131,19 +141,14 @@ const App: React.FC = () => {
         console.error("Audio play failed:", err);
         speak();
       });
-
-      // Safety timeout for long or stuck audio
-      setTimeout(() => {
-        if (isSpeaking && audioRef.current === audio && !audio.paused) {
-          // Audio still playing or stuck? Just proceed to speak after 3s
-        }
-      }, 3000);
     } else {
       speak();
     }
 
     if (newScore > 0 && newScore % 10 === 0) {
-      setTimeout(() => triggerMilestone(), 1500);
+      setTimeout(() => {
+        if (gameState === 'playing') triggerMilestone();
+      }, 1500);
     }
   };
 
@@ -151,6 +156,11 @@ const App: React.FC = () => {
     setCurrentSceneryIndex((prev) => (prev + 1) % SCENERIES.length);
     setPositionSeed(s => s + 1);
     setClickedAnimalId(null);
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.onended = null;
+    }
+    window.speechSynthesis.cancel();
   };
 
   if (gameState === 'intro') {
