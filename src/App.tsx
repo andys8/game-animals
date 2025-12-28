@@ -208,7 +208,7 @@ const App: React.FC = () => {
             className="bg-brand-accent text-orange-600 w-full py-8 rounded-[3.5rem] text-5xl font-black shadow-[0_30px_60px_rgba(0,0,0,0.4)] flex items-center justify-center gap-6 border-b-[14px] border-orange-700/40 active:border-b-0 active:translate-y-2 transition-all"
           >
             <Play size={60} fill="currentColor" />
-            {language === 'en' ? 'PLAY' : 'START'}
+            START
           </motion.button>
         </motion.div>
       </div>
