@@ -15,6 +15,7 @@ const App: React.FC = () => {
   const [positionSeed, setPositionSeed] = useState(0);
   const [availableVoices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const clickTimeoutRef = useRef<any>(null);
   const speakingTimeoutRef = useRef<any>(null);
 
@@ -37,6 +38,12 @@ const App: React.FC = () => {
            || null;
   }, [availableVoices]);
 
+  const shuffledAnimals = useMemo(() => {
+    if (!currentScenery) return [];
+    return [...currentScenery.animals].sort(() => Math.random() - 0.5);
+  }, [currentSceneryIndex, positionSeed]);
+
+  // Randomize animal positions with a seed to trigger updates
   const animalOffsets = useMemo(() => {
     if (!currentScenery) return [];
     // 3 safe zones closer together and lower down (positive Y)
@@ -45,12 +52,12 @@ const App: React.FC = () => {
       { bx: 10, by: 10 },
       { bx: 0, by: 25 }
     ];
-    return currentScenery.animals.map((_, i) => ({
+    return shuffledAnimals.map((_, i) => ({
       x: zones[i % 3].bx + (Math.random() * 10 - 5),
       y: zones[i % 3].by + (Math.random() * 10 - 5),
       duration: (Math.random() * 2 + 4) 
     }));
-  }, [currentSceneryIndex, positionSeed]);
+  }, [shuffledAnimals]);
 
   const startGame = () => {
     setGameState('playing');
@@ -62,6 +69,10 @@ const App: React.FC = () => {
   const triggerMilestone = () => {
     setShowMilestone(true);
     window.speechSynthesis.cancel();
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.onended = null;
+    }
     
     // Multi-stage confetti
     const duration = 1.5 * 1000;
@@ -109,8 +120,12 @@ const App: React.FC = () => {
   const playSound = (animal: Animal) => {
     if (showMilestone) return;
 
-    // Interrupt previous speech immediately
+    // Interrupt previous sound/speech immediately
     window.speechSynthesis.cancel();
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.onended = null;
+    }
 
     setClickedAnimalId(null);
     if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
@@ -137,6 +152,10 @@ const App: React.FC = () => {
     setCurrentSceneryIndex((prev) => (prev + 1) % SCENERIES.length);
     setPositionSeed(s => s + 1);
     setClickedAnimalId(null);
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.onended = null;
+    }
     window.speechSynthesis.cancel();
   };
 
@@ -291,7 +310,7 @@ const App: React.FC = () => {
             exit={{ opacity: 0, scale: 1.05 }}
             className="w-full max-w-7xl flex flex-wrap items-center justify-center px-6 gap-8 md:gap-16 lg:gap-24"
           >
-            {currentScenery.animals.map((animal, idx) => (
+            {shuffledAnimals.map((animal, idx) => (
               animal && (
                 <AnimalCard 
                   key={`${currentScenery.id}-${animal.id}-${idx}-${positionSeed}`}
