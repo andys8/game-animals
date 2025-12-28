@@ -5,7 +5,8 @@ import {
   Trees as Tree, Flower, Waves,
   Shell, Snail, Leaf,
   Rat as Mouse,
-  Worm
+  Worm,
+  Rainbow
 } from 'lucide-react';
 import { Cow, Sheep, Elephant, Lion, Duck } from '../assets/AnimalIcons';
 
@@ -203,6 +204,17 @@ export const SCENERIES: Scenery[] = [
       { icon: Sun, className: 'top-5 left-5 text-orange-400/40 size-32', animation: { scale: [1, 1.1, 1] } },
       { icon: Tree, className: 'bottom-0 right-5 text-yellow-900/20 size-48', animation: { skewY: [0, 2, 0] } },
       { icon: Cloud, className: 'top-20 right-10 text-white/50', animation: { x: [0, -30, 0] } }
+    ]
+  },
+  {
+    id: 'meadow',
+    names: { en: 'Meadow', de: 'Wiese' },
+    background: 'bg-linear-to-b from-yellow-300 via-green-200 to-emerald-100',
+    animals: [ANIMALS.mouse, ANIMALS.worm, ANIMALS.snail],
+    decorations: [
+      { icon: Rainbow, className: 'top-10 left-1/4 text-white/20 size-64', animation: { opacity: [0.2, 0.5, 0.2] } },
+      { icon: Flower, className: 'bottom-10 left-10 text-red-400/30 size-24', animation: { scale: [1, 1.2, 1] } },
+      { icon: Leaf, className: 'top-20 right-10 text-green-500/20', animation: { rotate: 45 } }
     ]
   },
   {
