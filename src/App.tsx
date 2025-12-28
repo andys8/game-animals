@@ -15,7 +15,6 @@ const App: React.FC = () => {
   const [positionSeed, setPositionSeed] = useState(0);
   const [availableVoices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   
-  const audioRef = useRef<HTMLAudioElement | null>(null);
   const clickTimeoutRef = useRef<any>(null);
   const speakingTimeoutRef = useRef<any>(null);
 
@@ -39,6 +38,7 @@ const App: React.FC = () => {
   }, [availableVoices]);
 
   const animalOffsets = useMemo(() => {
+    if (!currentScenery) return [];
     return currentScenery.animals.map(() => ({
       x: (Math.random() * 40 - 20),
       y: (Math.random() * 30 - 15),
@@ -56,10 +56,6 @@ const App: React.FC = () => {
   const triggerMilestone = () => {
     setShowMilestone(true);
     window.speechSynthesis.cancel();
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.onended = null;
-    }
     
     // Multi-stage confetti
     const duration = 3 * 1000;
@@ -107,12 +103,8 @@ const App: React.FC = () => {
   const playSound = (animal: Animal) => {
     if (showMilestone) return;
 
-    // Interrupt previous sound/speech immediately
+    // Interrupt previous speech immediately
     window.speechSynthesis.cancel();
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.onended = null;
-    }
 
     setClickedAnimalId(null);
     if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
@@ -126,29 +118,12 @@ const App: React.FC = () => {
     const newScore = score + 1;
     setScore(newScore);
 
-    const speak = () => {
-      speakAnimalName(animal);
-    };
-
-    if (animal.soundFile) {
-      const audioPath = `${import.meta.env.BASE_URL}assets/sounds/${animal.soundFile}`.replace(/\/+/g, '/');
-      const audio = new Audio(audioPath);
-      audioRef.current = audio;
-      
-      audio.play().then(() => {
-        audio.onended = speak;
-      }).catch((err) => {
-        console.error("Audio play failed:", err);
-        speak();
-      });
-    } else {
-      speak();
-    }
+    speakAnimalName(animal);
 
     if (newScore > 0 && newScore % 10 === 0) {
       setTimeout(() => {
         if (gameState === 'playing') triggerMilestone();
-      }, 1500);
+      }, 1000);
     }
   };
 
@@ -156,10 +131,6 @@ const App: React.FC = () => {
     setCurrentSceneryIndex((prev) => (prev + 1) % SCENERIES.length);
     setPositionSeed(s => s + 1);
     setClickedAnimalId(null);
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.onended = null;
-    }
     window.speechSynthesis.cancel();
   };
 
@@ -315,14 +286,16 @@ const App: React.FC = () => {
             className="w-full max-w-7xl flex flex-wrap items-center justify-center px-6 gap-8 md:gap-16 lg:gap-24"
           >
             {currentScenery.animals.map((animal, idx) => (
-              <AnimalCard 
-                key={`${currentScenery.id}-${animal.id}-${idx}-${positionSeed}`}
-                animal={animal} 
-                onClick={() => playSound(animal)}
-                isClicked={clickedAnimalId === animal.id}
-                offset={animalOffsets[idx]}
-                language={language}
-              />
+              animal && (
+                <AnimalCard 
+                  key={`${currentScenery.id}-${animal.id}-${idx}-${positionSeed}`}
+                  animal={animal} 
+                  onClick={() => playSound(animal)}
+                  isClicked={clickedAnimalId === animal.id}
+                  offset={animalOffsets[idx] || { x: 0, y: 0, duration: 5 }}
+                  language={language}
+                />
+              )
             ))}
           </motion.div>
         </AnimatePresence>

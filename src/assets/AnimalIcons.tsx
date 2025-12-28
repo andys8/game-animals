@@ -94,9 +94,15 @@ export const Duck = ({ size = 24, ...props }) => (
     strokeLinejoin="round"
     {...props}
   >
-    <path d="M12 5c-3 0-5 2-5 5v2c0 1 1 2 3 2h6c2 0 3-1 3-2v-2c0-3-2-5-5-5z" />
-    <path d="M7 10c-2 0-3 1-3 3s1 3 3 3h10c2 0 3-1 3-3s-1-3-3-3" />
-    <circle cx="10" cy="9" r="1" fill="currentColor" />
-    <path d="M15 10l2-1" />
+    {/* Body */}
+    <path d="M7 12c0 4 4 6 8 6s8-2 8-6-4-4-8-4-8 4-8 4z" />
+    {/* Head */}
+    <path d="M11 8c0-3 2-5 5-5s5 2 5 5" />
+    {/* Beak */}
+    <path d="M21 8h3l-1 2h-2z" fill="currentColor" />
+    {/* Eye */}
+    <circle cx="16" cy="6" r="1" fill="currentColor" />
+    {/* Tail */}
+    <path d="M7 12l-3-2 1 4z" />
   </svg>
 );

@@ -18,7 +18,6 @@ export interface Animal {
   icon: any;
   color: string;
   soundEmojis: Record<Language, string>;
-  soundFile?: string;
 }
 
 export interface Decoration {
@@ -41,32 +40,28 @@ export const ANIMALS: Record<string, Animal> = {
     names: { en: 'Cat', de: 'Katze' },
     icon: Cat,
     color: 'text-orange-500',
-    soundEmojis: { en: 'Meow!', de: 'Miau!' },
-    soundFile: 'cat.mp3'
+    soundEmojis: { en: 'Meow!', de: 'Miau!' }
   },
   dog: {
     id: 'dog',
     names: { en: 'Dog', de: 'Hund' },
     icon: Dog,
     color: 'text-amber-700',
-    soundEmojis: { en: 'Woof!', de: 'Wau!' },
-    soundFile: 'dog.mp3'
+    soundEmojis: { en: 'Woof!', de: 'Wau!' }
   },
   bird: {
     id: 'bird',
     names: { en: 'Bird', de: 'Vogel' },
     icon: Bird,
     color: 'text-blue-400',
-    soundEmojis: { en: 'Tweet!', de: 'Piep!' },
-    soundFile: 'bird.mp3'
+    soundEmojis: { en: 'Tweet!', de: 'Piep!' }
   },
   rabbit: {
     id: 'rabbit',
     names: { en: 'Rabbit', de: 'Hase' },
     icon: Rabbit,
     color: 'text-rose-300',
-    soundEmojis: { en: 'Hop!', de: 'Hüpf!' },
-    soundFile: 'rabbit.mp3'
+    soundEmojis: { en: 'Hop!', de: 'Hüpf!' }
   },
   fish: {
     id: 'fish',
@@ -87,8 +82,7 @@ export const ANIMALS: Record<string, Animal> = {
     names: { en: 'Bug', de: 'Käfer' },
     icon: Bug,
     color: 'text-red-500',
-    soundEmojis: { en: 'Buzz!', de: 'Summ!' },
-    soundFile: 'cricket.mp3'
+    soundEmojis: { en: 'Buzz!', de: 'Summ!' }
   },
   squirrel: {
     id: 'squirrel',
@@ -109,8 +103,7 @@ export const ANIMALS: Record<string, Animal> = {
     names: { en: 'Mouse', de: 'Maus' },
     icon: Mouse,
     color: 'text-gray-400',
-    soundEmojis: { en: 'Squeak!', de: 'Piep!' },
-    soundFile: 'mouse.mp3'
+    soundEmojis: { en: 'Squeak!', de: 'Piep!' }
   },
   worm: {
     id: 'worm',
@@ -124,40 +117,35 @@ export const ANIMALS: Record<string, Animal> = {
     names: { en: 'Cow', de: 'Kuh' },
     icon: Cow,
     color: 'text-slate-800',
-    soundEmojis: { en: 'Moo!', de: 'Muh!' },
-    soundFile: 'cow.mp3'
+    soundEmojis: { en: 'Moo!', de: 'Muh!' }
   },
   elephant: {
     id: 'elephant',
     names: { en: 'Elephant', de: 'Elefant' },
     icon: Elephant,
     color: 'text-slate-500',
-    soundEmojis: { en: 'Toot!', de: 'Töröö!' },
-    soundFile: 'elephant.mp3'
+    soundEmojis: { en: 'Toot!', de: 'Töröö!' }
   },
   lion: {
     id: 'lion',
     names: { en: 'Lion', de: 'Löwe' },
     icon: Lion,
     color: 'text-orange-600',
-    soundEmojis: { en: 'Roar!', de: 'Roooar!' },
-    soundFile: 'lion.mp3'
+    soundEmojis: { en: 'Roar!', de: 'Roooar!' }
   },
   sheep: {
     id: 'sheep',
     names: { en: 'Sheep', de: 'Schaf' },
     icon: Sheep,
     color: 'text-slate-400',
-    soundEmojis: { en: 'Baa!', de: 'Mäh!' },
-    soundFile: 'sheep.mp3'
+    soundEmojis: { en: 'Baa!', de: 'Mäh!' }
   },
   duck: {
     id: 'duck',
     names: { en: 'Duck', de: 'Ente' },
     icon: Duck,
     color: 'text-yellow-500',
-    soundEmojis: { en: 'Quack!', de: 'Quak!' },
-    soundFile: 'duck.mp3'
+    soundEmojis: { en: 'Quack!', de: 'Quak!' }
   }
 };
 
