@@ -39,9 +39,15 @@ const App: React.FC = () => {
 
   const animalOffsets = useMemo(() => {
     if (!currentScenery) return [];
-    return currentScenery.animals.map(() => ({
-      x: (Math.random() * 20), // Bias towards the right (more room on top-left)
-      y: (Math.random() * 20 + 10), // Bias towards the bottom
+    // 3 safe fixed zones with small jitter to prevent overlap/cutoff
+    const zones = [
+      { bx: -5, by: -10 },
+      { bx: 5, by: 0 },
+      { bx: -2, by: 10 }
+    ];
+    return currentScenery.animals.map((_, i) => ({
+      x: zones[i % 3].bx + (Math.random() * 6 - 3),
+      y: zones[i % 3].by + (Math.random() * 4 - 2),
       duration: (Math.random() * 2 + 4) 
     }));
   }, [currentSceneryIndex, positionSeed]);
@@ -276,7 +282,7 @@ const App: React.FC = () => {
       </div>
 
       {/* Animals Area */}
-      <div className="flex-1 relative flex items-center justify-center z-20 overflow-visible mt-32 md:mt-40">
+      <div className="flex-1 relative flex items-center justify-center z-20 overflow-visible mt-24 mb-10 px-4">
         <AnimatePresence mode="wait">
           <motion.div 
             key={`${currentScenery.id}-${positionSeed}`}
@@ -337,11 +343,11 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ animal, onClick, isClicked, off
       whileTap={{ scale: 0.9 }}
       onClick={onClick}
       className={`
-        relative bg-white rounded-[5rem] p-10 md:p-14
+        relative bg-white rounded-[4rem] p-8 md:p-14
         shadow-[0_50px_100px_rgba(0,0,0,0.15)] 
         flex flex-col items-center justify-between
-        w-56 h-56 md:w-80 md:h-80 lg:w-96 lg:h-96
-        border-b-[20px] border-gray-200/60
+        w-44 h-44 md:w-80 md:h-80 lg:w-96 lg:h-96
+        border-b-[16px] border-gray-200/60
         ${isClicked ? `ring-[24px] ${ringColor} !scale-110 !z-50` : 'z-10'}
         transition-all duration-300
       `}
@@ -357,7 +363,7 @@ const AnimalCard: React.FC<AnimalCardProps> = ({ animal, onClick, isClicked, off
           transition={{ duration: 0.5, type: "spring", stiffness: 300 }}
           className={`${animal.color} flex items-center justify-center`}
         >
-          <Icon size="100%" className="w-32 h-32 md:w-48 md:h-48 lg:w-60 lg:h-60" strokeWidth={2.2} />
+          <Icon size="100%" className="w-24 h-24 md:w-48 md:h-48 lg:w-60 lg:h-60" strokeWidth={2.2} />
         </motion.div>
       </div>
       
