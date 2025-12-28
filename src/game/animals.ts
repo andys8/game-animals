@@ -6,15 +6,6 @@ import {
   Shell, Snail, Leaf,
   Rat as Mouse,
   Worm,
-  Beef,
-  PiggyBank,
-  PawPrint,
-  Mountain,
-  Palmtree,
-  Sprout,
-  Shovel,
-  Wind,
-  Shrub,
   Rainbow
 } from 'lucide-react';
 
@@ -90,9 +81,9 @@ export const ANIMALS: Record<string, Animal> = {
     color: 'text-emerald-600',
     soundEmojis: { en: 'Slow...', de: 'Langsam...' }
   },
-  ladybug: {
-    id: 'ladybug',
-    names: { en: 'Ladybug', de: 'Marienkäfer' },
+  bug: {
+    id: 'bug',
+    names: { en: 'Bug', de: 'Käfer' },
     icon: Bug,
     color: 'text-red-500',
     soundEmojis: { en: 'Buzz!', de: 'Summ!' },
@@ -126,54 +117,6 @@ export const ANIMALS: Record<string, Animal> = {
     icon: Worm,
     color: 'text-rose-400',
     soundEmojis: { en: 'Wiggle!', de: 'Wackel!' }
-  },
-  cow: {
-    id: 'cow',
-    names: { en: 'Cow', de: 'Kuh' },
-    icon: Beef,
-    color: 'text-amber-900',
-    soundEmojis: { en: 'Moo!', de: 'Muh!' },
-    soundFile: 'cow.mp3'
-  },
-  pig: {
-    id: 'pig',
-    names: { en: 'Pig', de: 'Schwein' },
-    icon: PiggyBank,
-    color: 'text-pink-400',
-    soundEmojis: { en: 'Oink!', de: 'Oink!' },
-    soundFile: 'pig.mp3'
-  },
-  duck: {
-    id: 'duck',
-    names: { en: 'Duck', de: 'Ente' },
-    icon: Bird,
-    color: 'text-yellow-500',
-    soundEmojis: { en: 'Quack!', de: 'Quak!' },
-    soundFile: 'duck.mp3'
-  },
-  elephant: {
-    id: 'elephant',
-    names: { en: 'Elephant', de: 'Elefant' },
-    icon: PawPrint,
-    color: 'text-blue-300',
-    soundEmojis: { en: 'Toot!', de: 'Töröö!' },
-    soundFile: 'elephant.mp3'
-  },
-  lion: {
-    id: 'lion',
-    names: { en: 'Lion', de: 'Löwe' },
-    icon: PawPrint,
-    color: 'text-orange-600',
-    soundEmojis: { en: 'Roar!', de: 'Roooar!' },
-    soundFile: 'lion.mp3'
-  },
-  sheep: {
-    id: 'sheep',
-    names: { en: 'Sheep', de: 'Schaf' },
-    icon: Cloud,
-    color: 'text-white',
-    soundEmojis: { en: 'Baa!', de: 'Mäh!' },
-    soundFile: 'sheep.mp3'
   }
 };
 
@@ -182,87 +125,44 @@ export const SCENERIES: Scenery[] = [
     id: 'garden',
     names: { en: 'Garden', de: 'Garten' },
     background: 'bg-linear-to-b from-green-300 via-emerald-200 to-yellow-100',
-    animals: [ANIMALS.cat, ANIMALS.dog, ANIMALS.ladybug],
+    animals: [ANIMALS.cat, ANIMALS.dog, ANIMALS.bug],
     decorations: [
       { icon: Sun, className: 'top-10 right-10 text-yellow-400/60', animation: { rotate: 360 } },
       { icon: Flower, className: 'bottom-10 left-20 text-pink-400/40', animation: { scale: [1, 1.2, 1] } },
-      { icon: Flower, className: 'bottom-20 right-40 text-purple-400/40', animation: { scale: [1, 1.3, 1] } },
-      { icon: Sprout, className: 'bottom-32 left-40 text-green-600/30', animation: { y: [0, 10, 0] } },
-      { icon: Flower, className: 'top-1/2 left-5 text-yellow-400/20', animation: { rotate: 180 } },
-      { icon: Shrub, className: 'bottom-0 left-0 text-emerald-800/20 size-48', animation: { skewX: 2 } },
-      { icon: Leaf, className: 'top-20 left-1/4 text-green-500/20', animation: { rotate: 45 } }
+      { icon: Flower, className: 'bottom-20 right-40 text-purple-400/40', animation: { scale: [1, 1.3, 1] } }
     ]
   },
   {
     id: 'pond',
     names: { en: 'Pond', de: 'Teich' },
     background: 'bg-linear-to-b from-blue-400 via-cyan-200 to-indigo-100',
-    animals: [ANIMALS.fish, ANIMALS.turtle, ANIMALS.duck],
+    animals: [ANIMALS.fish, ANIMALS.turtle, ANIMALS.bird],
     decorations: [
       { icon: Waves, className: 'bottom-0 w-full text-white/40 h-24', animation: { x: [-20, 20, -20] } },
       { icon: Cloud, className: 'top-20 left-20 text-white/80', animation: { x: [0, 100, 0] } },
-      { icon: Shell, className: 'bottom-10 right-20 text-orange-200/60', animation: { rotate: [0, 15, 0] } },
-      { icon: Waves, className: 'top-1/2 left-0 w-full text-blue-400/10 h-12', animation: { x: [10, -10, 10] } },
-      { icon: Cloud, className: 'top-10 right-40 text-white/40', animation: { x: [0, -60, 0] } },
-      { icon: Shell, className: 'bottom-20 left-10 text-yellow-100/40', animation: { scale: 0.8 } },
-      { icon: Waves, className: 'bottom-40 w-full text-white/10 h-8', animation: { x: [-5, 5, -5] } }
+      { icon: Shell, className: 'bottom-10 right-20 text-orange-200/60', animation: { rotate: [0, 15, 0] } }
     ]
   },
   {
     id: 'forest',
     names: { en: 'Forest', de: 'Wald' },
     background: 'bg-linear-to-b from-emerald-500 via-green-200 to-orange-50',
-    animals: [ANIMALS.rabbit, ANIMALS.squirrel, ANIMALS.bird],
+    animals: [ANIMALS.rabbit, ANIMALS.squirrel, ANIMALS.snail],
     decorations: [
       { icon: Tree, className: 'bottom-0 left-5 text-emerald-900/20 size-48', animation: { skewX: [-3, 3, -3] } },
       { icon: Tree, className: 'bottom-0 right-5 text-green-900/20 size-64', animation: { skewX: [3, -3, 3] } },
-      { icon: Leaf, className: 'top-10 left-1/2 text-green-400/30', animation: { y: [0, 40, 0], rotate: 360 } },
-      { icon: Tree, className: 'bottom-20 left-1/3 text-emerald-800/10 size-32', animation: { skewX: [-1, 1, -1] } },
-      { icon: Mountain, className: 'bottom-0 right-1/4 text-gray-400/10 size-96', animation: { scale: [1, 1.02, 1] } },
-      { icon: Shrub, className: 'bottom-10 right-1/3 text-green-700/20 size-24', animation: { scale: 1.1 } },
-      { icon: Cloud, className: 'top-20 right-10 text-white/30', animation: { x: [0, 40, 0] } }
+      { icon: Leaf, className: 'top-10 left-1/2 text-green-400/30', animation: { y: [0, 40, 0], rotate: 360 } }
     ]
   },
   {
-    id: 'farm',
-    names: { en: 'Farm', de: 'Bauernhof' },
-    background: 'bg-linear-to-b from-amber-200 via-yellow-100 to-orange-50',
-    animals: [ANIMALS.cow, ANIMALS.pig, ANIMALS.sheep],
+    id: 'meadow',
+    names: { en: 'Meadow', de: 'Wiese' },
+    background: 'bg-linear-to-b from-yellow-200 via-green-100 to-emerald-50',
+    animals: [ANIMALS.mouse, ANIMALS.worm, ANIMALS.bird],
     decorations: [
       { icon: Sun, className: 'top-10 left-10 text-orange-400/40 size-40', animation: { scale: [1, 1.1, 1] } },
-      { icon: Tree, className: 'bottom-0 right-20 text-yellow-900/20 size-56', animation: { skewY: [0, 2, 0] } },
       { icon: Cloud, className: 'top-32 right-20 text-white/50', animation: { x: [0, -50, 0] } },
-      { icon: Shovel, className: 'bottom-10 left-10 text-amber-800/20 size-24', animation: { rotate: [-5, 5, -5] } },
-      { icon: Wind, className: 'top-20 left-1/3 text-white/30', animation: { x: [-100, 100, -100], opacity: [0, 1, 0] } },
-      { icon: Shrub, className: 'bottom-0 right-1/2 text-orange-800/10 size-32', animation: { scale: [1, 1.05, 1] } }
-    ]
-  },
-  {
-    id: 'park',
-    names: { en: 'Park', de: 'Park' },
-    background: 'bg-linear-to-b from-yellow-300 via-orange-200 to-red-100',
-    animals: [ANIMALS.mouse, ANIMALS.worm, ANIMALS.snail],
-    decorations: [
-      { icon: Sun, className: 'top-10 left-10 text-orange-500/40 size-40', animation: { scale: [1, 1.1, 1] } },
-      { icon: Tree, className: 'bottom-0 right-20 text-yellow-900/20 size-56', animation: { skewY: [0, 2, 0] } },
-      { icon: Cloud, className: 'top-32 right-20 text-white/50', animation: { x: [0, -50, 0] } },
-      { icon: Flower, className: 'bottom-10 left-1/4 text-red-400/30', animation: { scale: [1, 1.2, 1] } },
-      { icon: Tree, className: 'bottom-0 left-10 text-green-800/10 size-48', animation: { skewX: [1, -1, 1] } },
       { icon: Rainbow, className: 'top-10 right-1/4 text-white/20 size-64', animation: { opacity: [0.2, 0.5, 0.2] } }
-    ]
-  },
-  {
-    id: 'safari',
-    names: { en: 'Safari', de: 'Safari' },
-    background: 'bg-linear-to-br from-orange-400 to-red-500',
-    animals: [ANIMALS.elephant, ANIMALS.lion, ANIMALS.bird],
-    decorations: [
-      { icon: Sun, className: 'top-10 left-1/2 text-white/20 size-60', animation: { scale: [1, 1.2, 1] } },
-      { icon: Tree, className: 'bottom-0 left-0 text-orange-900/30 size-80', animation: { rotate: [-1, 1, -1] } },
-      { icon: Palmtree, className: 'bottom-0 right-0 text-yellow-900/20 size-72', animation: { skewX: [-2, 2, -2] } },
-      { icon: Wind, className: 'top-40 right-10 text-white/10', animation: { x: [0, -200, 0] } },
-      { icon: Mountain, className: 'bottom-0 left-1/4 text-orange-950/10 size-64', animation: { y: [0, 5, 0] } },
-      { icon: Palmtree, className: 'bottom-20 left-1/3 text-orange-800/10 size-48', animation: { rotate: [0, 5, 0] } }
     ]
   }
 ];
