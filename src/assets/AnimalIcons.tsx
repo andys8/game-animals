@@ -45,20 +45,25 @@ export const Bee = ({ size = 24, ...props }: any) => (
     strokeLinejoin="round"
     {...props}
   >
-    {/* Wings */}
-    <path d="M12 10c-3-6-9-4-9 1s6 2 9 1" fill="currentColor" fillOpacity="0.05" />
-    <path d="M12 10c3-6 9-4 9 1s-6 2-9 1" fill="currentColor" fillOpacity="0.05" />
+    {/* Large Fluffy Wings */}
+    <path d="M12 10c-4-6-10-4-10 2s6 3 10 1" fill="currentColor" fillOpacity="0.05" />
+    <path d="M12 10c4-6 10-4 10 2s-6 3-10 1" fill="currentColor" fillOpacity="0.05" />
     {/* Round Body */}
-    <circle cx="12" cy="13" r="7" fill="currentColor" fillOpacity="0.2" />
-    <circle cx="12" cy="13" r="7" />
-    {/* Stripes */}
-    <path d="M7 11h10" strokeWidth="2.5" />
-    <path d="M5.5 14h13" strokeWidth="2.5" />
-    <path d="M7 17h10" strokeWidth="2.5" />
+    <circle cx="12" cy="13" r="8" fill="currentColor" fillOpacity="0.2" />
+    <circle cx="12" cy="13" r="8" />
+    {/* Bold Stripes */}
+    <path d="M6 11h12" strokeWidth="3" />
+    <path d="M4.5 14h15" strokeWidth="3" />
+    <path d="M6 17h12" strokeWidth="3" />
+    {/* Friendly Eyes (consistent with Frog/Owl) */}
+    <circle cx="9" cy="10" r="2.5" fill="white" stroke="currentColor" />
+    <circle cx="15" cy="10" r="2.5" fill="white" stroke="currentColor" />
+    <circle cx="9" cy="10" r="1" fill="currentColor" />
+    <circle cx="15" cy="10" r="1" fill="currentColor" />
     {/* Antenna */}
-    <path d="M10 7L9 4M14 7l1-3" />
-    <circle cx="9" cy="4" r="0.8" fill="currentColor" />
-    <circle cx="15" cy="4" r="0.8" fill="currentColor" />
+    <path d="M10 6L9 3M14 6l1-3" />
+    <circle cx="9" cy="3" r="1" fill="currentColor" />
+    <circle cx="15" cy="3" r="1" fill="currentColor" />
   </svg>
 );
 
@@ -74,21 +79,23 @@ export const Bear = ({ size = 24, ...props }: any) => (
     strokeLinejoin="round"
     {...props}
   >
-    {/* Rounded Ears */}
-    <circle cx="6" cy="7" r="3.5" fill="currentColor" fillOpacity="0.1" />
-    <circle cx="6" cy="7" r="3.5" />
-    <circle cx="18" cy="7" r="3.5" fill="currentColor" fillOpacity="0.1" />
-    <circle cx="18" cy="7" r="3.5" />
-    {/* Face */}
+    {/* Rounded Ears with Inner Detail */}
+    <circle cx="6" cy="7" r="4" fill="currentColor" fillOpacity="0.1" />
+    <circle cx="6" cy="7" r="4" />
+    <circle cx="18" cy="7" r="4" fill="currentColor" fillOpacity="0.1" />
+    <circle cx="18" cy="7" r="4" />
+    {/* Big Round Face */}
     <circle cx="12" cy="13" r="9" fill="currentColor" fillOpacity="0.05" />
     <circle cx="12" cy="13" r="9" />
-    {/* Snout Area */}
-    <ellipse cx="12" cy="16" rx="4" ry="3" fill="white" stroke="currentColor" />
-    {/* Black Nose */}
-    <circle cx="12" cy="15.5" r="1.2" fill="black" stroke="black" />
-    {/* Small Eyes */}
-    <circle cx="8.5" cy="11" r="1" fill="currentColor" />
-    <circle cx="15.5" cy="11" r="1" fill="currentColor" />
+    {/* Muzzle Area (consistent style) */}
+    <circle cx="12" cy="16" r="4.5" fill="white" stroke="currentColor" strokeWidth="1.5" />
+    {/* Big Soft Nose */}
+    <circle cx="12" cy="15" r="1.5" fill="black" />
+    {/* Kind Eyes */}
+    <circle cx="8.5" cy="11" r="1.2" fill="currentColor" />
+    <circle cx="15.5" cy="11" r="1.2" fill="currentColor" />
+    {/* Smile */}
+    <path d="M10.5 18c1 1 2 1 3 0" />
   </svg>
 );
 
@@ -104,18 +111,19 @@ export const Fox = ({ size = 24, ...props }: any) => (
     strokeLinejoin="round"
     {...props}
   >
-    {/* Big Pointy Ears */}
-    <path d="M4 10L2 3l7 4M20 10l2-7-7 4" fill="currentColor" fillOpacity="0.1" />
-    {/* Face Shape */}
-    <path d="M12 21l-9-9c0-4 4-8 9-8s9 4 9 8l-9 9z" fill="currentColor" fillOpacity="0.05" />
-    <path d="M12 21l-9-9c0-4 4-8 9-8s9 4 9 8l-9 9z" />
-    {/* White Cheek/Snout Patches */}
-    <path d="M12 21l-7-7c1-1 3-1 7 0s6 1 7 0l-7 7z" fill="white" />
-    {/* Eyes */}
-    <circle cx="8" cy="12" r="1.2" fill="currentColor" />
-    <circle cx="16" cy="12" r="1.2" fill="currentColor" />
+    {/* Iconic Large Pointy Ears */}
+    <path d="M3 8L2 2l8 5M21 8l1-6-8 5" fill="currentColor" fillOpacity="0.1" />
+    <path d="M3 8L2 2l8 5M21 8l1-6-8 5" />
+    {/* Diamond Face Shape */}
+    <path d="M12 22l-9-10c0-5 4-9 9-9s9 4 9 9l-9 10z" fill="currentColor" fillOpacity="0.05" />
+    <path d="M12 22l-9-10c0-5 4-9 9-9s9 4 9 9l-9 10z" />
+    {/* Large White Fur Patches */}
+    <path d="M12 22l-7-8c2-2 12-2 14 0l-7 8z" fill="white" stroke="currentColor" strokeWidth="1" />
+    {/* Intense but Cute Eyes */}
+    <circle cx="8" cy="12" r="1.5" fill="currentColor" />
+    <circle cx="16" cy="12" r="1.5" fill="currentColor" />
     {/* Black Nose Tip */}
-    <path d="M11 19h2l-1 2z" fill="black" stroke="black" />
+    <circle cx="12" cy="20" r="1.5" fill="black" />
   </svg>
 );
 
