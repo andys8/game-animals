@@ -17,7 +17,6 @@ const App: React.FC = () => {
   const [availableVoices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
 
   const currentScenery = SCENERIES[currentSceneryIndex];
-  const progress = score % 10;
 
   // Voice setup
   useEffect(() => {
@@ -239,39 +238,20 @@ const App: React.FC = () => {
       })}
 
       {/* UI Overlay */}
-      <div className="absolute top-6 left-6 right-6 flex justify-between items-center z-50 pointer-events-none">
-        <div className="flex flex-col gap-2">
-          <motion.div 
-            key={score}
-            initial={{ scale: 0.8 }}
-            animate={{ scale: 1 }}
-            className="bg-white/95 px-8 py-4 rounded-[2.5rem] shadow-2xl flex items-center gap-4 border-4 border-brand-accent pointer-events-auto"
-          >
-            <Star className="text-yellow-500 fill-yellow-500" size={44} />
-            <span className="text-5xl font-black text-gray-800 tracking-tighter">{score}</span>
-          </motion.div>
-          
-          {/* Progress Bar (Stars) */}
-          <div className="flex gap-1 ml-2 pointer-events-none">
-            {[...Array(10)].map((_, i) => (
-              <motion.div
-                key={i}
-                initial={false}
-                animate={{ 
-                  scale: i < progress ? 1 : 0.7,
-                  opacity: i < progress ? 1 : 0.3
-                }}
-                className={`${i < progress ? 'text-yellow-400 fill-yellow-400' : 'text-gray-400'}`}
-              >
-                <Star size={24} fill={i < progress ? "currentColor" : "none"} />
-              </motion.div>
-            ))}
-          </div>
-        </div>
+      <div className="absolute top-6 left-6 right-6 flex justify-between items-start z-50 pointer-events-none">
+        <motion.div 
+          key={score}
+          initial={{ scale: 0.8, y: -20 }}
+          animate={{ scale: 1, y: 0 }}
+          className="bg-white/95 px-8 py-4 rounded-[2.5rem] shadow-2xl flex items-center gap-4 border-4 border-brand-accent pointer-events-auto"
+        >
+          <Star className="text-yellow-500 fill-yellow-500" size={44} />
+          <span className="text-5xl font-black text-gray-800 tracking-tighter">{score}</span>
+        </motion.div>
         
         <button 
           onClick={nextScenery}
-          className="bg-white/95 p-6 rounded-[2.5rem] shadow-2xl text-brand-primary hover:scale-110 active:scale-90 transition-all border-4 border-brand-primary/20 pointer-events-auto self-start"
+          className="bg-white/95 p-6 rounded-[2.5rem] shadow-2xl text-brand-primary hover:scale-110 active:scale-90 transition-all border-4 border-brand-primary/20 pointer-events-auto"
         >
           <RefreshCw size={44} strokeWidth={4} />
         </button>
