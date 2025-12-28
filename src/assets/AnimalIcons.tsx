@@ -10,11 +10,11 @@ export const Frog = ({ size = 24, ...props }: any) => (
     strokeLinejoin="round"
     {...props}
   >
-    {/* Head/Body */}
+    {/* Head/Body - solid white fill */}
     <path 
       d="M2 13c0-4 4.5-7 10-7s10 3 10 7-4.5 7-10 7-10-3-10-7z" 
-      fill="currentColor" 
-      fillOpacity="0.1" 
+      fill="white" 
+      stroke="currentColor" 
     />
     {/* Large protruding eyes */}
     <circle cx="7" cy="6" r="4" fill="white" stroke="currentColor" />
@@ -49,9 +49,8 @@ export const Bear = ({ size = 24, ...props }: any) => (
     <circle cx="7" cy="7" r="4" fill="currentColor" fillOpacity="0.1" />
     <circle cx="17" cy="7" r="4" fill="currentColor" fillOpacity="0.1" />
     
-    {/* Big round face */}
-    <circle cx="12" cy="13" r="9" fill="currentColor" fillOpacity="0.05" />
-    <circle cx="12" cy="13" r="9" />
+    {/* Big round face - solid fill to hide ears behind it */}
+    <circle cx="12" cy="13" r="9" fill="white" stroke="currentColor" />
 
     {/* Expressive eyes with highlights */}
     <g fill="currentColor" stroke="none">
@@ -86,9 +85,8 @@ export const Owl = ({ size = 24, ...props }: any) => (
     strokeLinejoin="round"
     {...props}
   >
-    {/* Round Body */}
-    <circle cx="12" cy="13" r="9" fill="currentColor" fillOpacity="0.05" />
-    <circle cx="12" cy="13" r="9" />
+    {/* Round Body - solid white fill */}
+    <circle cx="12" cy="13" r="9" fill="white" stroke="currentColor" />
     {/* Eye Circles */}
     <circle cx="8" cy="10" r="4.5" fill="white" stroke="currentColor" />
     <circle cx="16" cy="10" r="4.5" fill="white" stroke="currentColor" />
