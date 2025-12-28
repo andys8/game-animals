@@ -117,38 +117,31 @@ export const Spider = ({ size = 24, ...props }: any) => (
     strokeLinejoin="round"
     {...props}
   >
-    {/* Large round body with depth */}
-    <circle cx="12" cy="13" r="8" fill="currentColor" fillOpacity="0.05" />
-    <circle cx="12" cy="13" r="8" />
+    {/* Abdomen (Back part) */}
+    <ellipse cx="12" cy="15" rx="6" ry="7" fill="currentColor" fillOpacity="0.1" />
+    <ellipse cx="12" cy="15" rx="6" ry="7" />
     
-    {/* 8 Characterful Legs with joints */}
-    <g strokeWidth="1.5">
-      {/* Left side */}
-      <path d="M7 8L4 5L2 7" />
-      <path d="M5 11L2 11L1 13" />
-      <path d="M5 15L2 16L2 19" />
-      <path d="M7 18L5 21L7 23" />
-      {/* Right side */}
-      <path d="M17 8L20 5L22 7" />
-      <path d="M19 11L22 11L23 13" />
-      <path d="M19 15L22 16L22 19" />
-      <path d="M17 18L19 21L17 23" />
-    </g>
+    {/* Cephalothorax (Front part) */}
+    <circle cx="12" cy="8" r="3.5" fill="currentColor" fillOpacity="0.05" />
+    <circle cx="12" cy="8" r="3.5" />
 
-    {/* Expressive eyes (consistent with Frog/Owl) */}
-    <circle cx="9" cy="10" r="2.5" fill="white" stroke="currentColor" />
-    <circle cx="15" cy="10" r="2.5" fill="white" stroke="currentColor" />
-    <circle cx="9" cy="10" r="1" fill="currentColor" stroke="none" />
-    <circle cx="15" cy="10" r="1" fill="currentColor" stroke="none" />
-    
-    {/* Eye Highlights */}
-    <circle cx="8.5" cy="9.2" r="0.4" fill="white" stroke="none" />
-    <circle cx="14.5" cy="9.2" r="0.4" fill="white" stroke="none" />
-    
-    {/* Friendly smile */}
-    <path d="M9 14c1 2 5 2 6 0" strokeWidth="2" />
-    
-    {/* Back markings for extra detail */}
-    <circle cx="12" cy="18" r="1" fill="currentColor" fillOpacity="0.2" stroke="none" />
+    {/* 8 Legs with spidery bends */}
+    <g strokeWidth="1.8">
+      {/* Front pair */}
+      <path d="M10 7L7 4L3 5" />
+      <path d="M14 7l3-3l4 1" />
+      
+      {/* Mid-front pair */}
+      <path d="M9 8L5 7L2 10" />
+      <path d="M15 8l4-1l3 3" />
+      
+      {/* Mid-back pair */}
+      <path d="M9 10L5 12L2 16" />
+      <path d="M15 10l4 2l3 4" />
+      
+      {/* Back pair */}
+      <path d="M10 11L8 16L5 21" />
+      <path d="M14 11l2 5l3 5" />
+    </g>
   </svg>
 );
