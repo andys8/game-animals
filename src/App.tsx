@@ -58,7 +58,7 @@ const App: React.FC = () => {
     window.speechSynthesis.cancel();
     
     // Multi-stage confetti
-    const duration = 3 * 1000;
+    const duration = 1.5 * 1000;
     const animationEnd = Date.now() + duration;
     const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
 
@@ -84,7 +84,7 @@ const App: React.FC = () => {
       setShowMilestone(false);
       setCurrentSceneryIndex((prev) => (prev + 1) % SCENERIES.length);
       setPositionSeed(s => s + 1);
-    }, 3500);
+    }, 2000);
   };
 
   const speakAnimalName = (animal: Animal) => {
@@ -120,10 +120,10 @@ const App: React.FC = () => {
 
     speakAnimalName(animal);
 
-    if (newScore > 0 && newScore % 10 === 0) {
+    if (newScore > 0 && newScore % 20 === 0) {
       setTimeout(() => {
         if (gameState === 'playing') triggerMilestone();
-      }, 1000);
+      }, 500);
     }
   };
 
