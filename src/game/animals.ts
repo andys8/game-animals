@@ -166,7 +166,7 @@ export const SCENERIES: Scenery[] = [
     id: 'garden',
     names: { en: 'Garden', de: 'Garten' },
     background: 'bg-linear-to-b from-green-300 via-emerald-200 to-yellow-100',
-    animals: [ANIMALS.cat, ANIMALS.dog, ANIMALS.ladybug],
+    animals: [ANIMALS.cat, ANIMALS.dog, ANIMALS.bug],
     decorations: [
       { icon: Sun, className: 'top-10 right-10 text-yellow-400/60', animation: { rotate: 360 } },
       { icon: Flower, className: 'bottom-10 left-10 text-pink-400/40', animation: { scale: [1, 1.2, 1] } },
