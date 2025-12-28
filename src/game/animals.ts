@@ -8,7 +8,7 @@ import {
   Worm,
   Rainbow
 } from 'lucide-react';
-import { Cow, Sheep, Elephant, Lion, Duck } from '../assets/AnimalIcons';
+import { Frog, Bee, Bear, Fox, Owl } from '../assets/AnimalIcons';
 
 export type Language = 'en' | 'de';
 
@@ -77,9 +77,44 @@ export const ANIMALS: Record<string, Animal> = {
     color: 'text-emerald-600',
     soundEmojis: { en: 'Slow...', de: 'Langsam...' }
   },
-  bug: {
-    id: 'bug',
-    names: { en: 'Bug', de: 'Käfer' },
+  frog: {
+    id: 'frog',
+    names: { en: 'Frog', de: 'Frosch' },
+    icon: Frog,
+    color: 'text-green-500',
+    soundEmojis: { en: 'Ribbit!', de: 'Quaak!' }
+  },
+  bee: {
+    id: 'bee',
+    names: { en: 'Bee', de: 'Biene' },
+    icon: Bee,
+    color: 'text-yellow-500',
+    soundEmojis: { en: 'Bzzz!', de: 'Summ!' }
+  },
+  bear: {
+    id: 'bear',
+    names: { en: 'Bear', de: 'Bär' },
+    icon: Bear,
+    color: 'text-amber-900',
+    soundEmojis: { en: 'Grrr!', de: 'Brumm!' }
+  },
+  fox: {
+    id: 'fox',
+    names: { en: 'Fox', de: 'Fuchs' },
+    icon: Fox,
+    color: 'text-orange-600',
+    soundEmojis: { en: 'Yap!', de: 'Kläff!' }
+  },
+  owl: {
+    id: 'owl',
+    names: { en: 'Owl', de: 'Eule' },
+    icon: Owl,
+    color: 'text-indigo-400',
+    soundEmojis: { en: 'Hoot!', de: 'Huhu!' }
+  },
+  ladybug: {
+    id: 'ladybug',
+    names: { en: 'Ladybug', de: 'Marienkäfer' },
     icon: Bug,
     color: 'text-red-500',
     soundEmojis: { en: 'Buzz!', de: 'Summ!' }
@@ -111,41 +146,6 @@ export const ANIMALS: Record<string, Animal> = {
     icon: Worm,
     color: 'text-rose-400',
     soundEmojis: { en: 'Wiggle!', de: 'Wackel!' }
-  },
-  cow: {
-    id: 'cow',
-    names: { en: 'Cow', de: 'Kuh' },
-    icon: Cow,
-    color: 'text-slate-800',
-    soundEmojis: { en: 'Moo!', de: 'Muh!' }
-  },
-  elephant: {
-    id: 'elephant',
-    names: { en: 'Elephant', de: 'Elefant' },
-    icon: Elephant,
-    color: 'text-slate-500',
-    soundEmojis: { en: 'Toot!', de: 'Töröö!' }
-  },
-  lion: {
-    id: 'lion',
-    names: { en: 'Lion', de: 'Löwe' },
-    icon: Lion,
-    color: 'text-orange-600',
-    soundEmojis: { en: 'Roar!', de: 'Roooar!' }
-  },
-  sheep: {
-    id: 'sheep',
-    names: { en: 'Sheep', de: 'Schaf' },
-    icon: Sheep,
-    color: 'text-slate-400',
-    soundEmojis: { en: 'Baa!', de: 'Mäh!' }
-  },
-  duck: {
-    id: 'duck',
-    names: { en: 'Duck', de: 'Ente' },
-    icon: Duck,
-    color: 'text-yellow-500',
-    soundEmojis: { en: 'Quack!', de: 'Quak!' }
   }
 };
 
@@ -154,7 +154,7 @@ export const SCENERIES: Scenery[] = [
     id: 'garden',
     names: { en: 'Garden', de: 'Garten' },
     background: 'bg-linear-to-b from-green-300 via-emerald-200 to-yellow-100',
-    animals: [ANIMALS.cat, ANIMALS.dog, ANIMALS.bug],
+    animals: [ANIMALS.cat, ANIMALS.dog, ANIMALS.bee],
     decorations: [
       { icon: Sun, className: 'top-10 right-10 text-yellow-400/60', animation: { rotate: 360 } },
       { icon: Flower, className: 'bottom-10 left-10 text-pink-400/40', animation: { scale: [1, 1.2, 1] } },
@@ -165,7 +165,7 @@ export const SCENERIES: Scenery[] = [
     id: 'pond',
     names: { en: 'Pond', de: 'Teich' },
     background: 'bg-linear-to-b from-blue-400 via-cyan-200 to-indigo-100',
-    animals: [ANIMALS.fish, ANIMALS.turtle, ANIMALS.duck],
+    animals: [ANIMALS.fish, ANIMALS.turtle, ANIMALS.frog],
     decorations: [
       { icon: Waves, className: 'bottom-0 w-full text-white/40 h-16', animation: { x: [-10, 10, -10] } },
       { icon: Cloud, className: 'top-10 left-10 text-white/80', animation: { x: [0, 50, 0] } },
@@ -176,7 +176,7 @@ export const SCENERIES: Scenery[] = [
     id: 'forest',
     names: { en: 'Forest', de: 'Wald' },
     background: 'bg-linear-to-b from-emerald-500 via-green-200 to-orange-50',
-    animals: [ANIMALS.rabbit, ANIMALS.squirrel, ANIMALS.bird],
+    animals: [ANIMALS.bear, ANIMALS.fox, ANIMALS.owl],
     decorations: [
       { icon: Tree, className: 'bottom-0 left-0 text-emerald-900/20 size-40', animation: { skewX: [-2, 2, -2] } },
       { icon: Tree, className: 'bottom-0 right-0 text-green-900/20 size-48', animation: { skewX: [2, -2, 2] } },
@@ -184,21 +184,10 @@ export const SCENERIES: Scenery[] = [
     ]
   },
   {
-    id: 'farm',
-    names: { en: 'Farm', de: 'Bauernhof' },
-    background: 'bg-linear-to-b from-amber-200 via-yellow-100 to-orange-50',
-    animals: [ANIMALS.cow, ANIMALS.sheep, ANIMALS.mouse],
-    decorations: [
-      { icon: Sun, className: 'top-5 left-5 text-orange-400/40 size-32', animation: { scale: [1, 1.1, 1] } },
-      { icon: Tree, className: 'bottom-0 right-5 text-yellow-900/20 size-48', animation: { skewY: [0, 2, 0] } },
-      { icon: Cloud, className: 'top-20 right-10 text-white/50', animation: { x: [0, -30, 0] } }
-    ]
-  },
-  {
     id: 'meadow',
     names: { en: 'Meadow', de: 'Wiese' },
     background: 'bg-linear-to-b from-yellow-300 via-green-200 to-emerald-100',
-    animals: [ANIMALS.worm, ANIMALS.snail, ANIMALS.bird],
+    animals: [ANIMALS.rabbit, ANIMALS.squirrel, ANIMALS.bird],
     decorations: [
       { icon: Rainbow, className: 'top-10 left-1/4 text-white/20 size-64', animation: { opacity: [0.2, 0.5, 0.2] } },
       { icon: Flower, className: 'bottom-10 left-10 text-red-400/30 size-24', animation: { scale: [1, 1.2, 1] } },
@@ -206,14 +195,14 @@ export const SCENERIES: Scenery[] = [
     ]
   },
   {
-    id: 'safari',
-    names: { en: 'Safari', de: 'Safari' },
-    background: 'bg-linear-to-br from-orange-400 to-red-500',
-    animals: [ANIMALS.elephant, ANIMALS.lion, ANIMALS.bird],
+    id: 'park',
+    names: { en: 'Park', de: 'Park' },
+    background: 'bg-linear-to-b from-blue-200 via-emerald-100 to-white',
+    animals: [ANIMALS.mouse, ANIMALS.worm, ANIMALS.snail],
     decorations: [
-      { icon: Sun, className: 'top-10 left-10 text-white/20 size-48', animation: { scale: [1, 1.2, 1] } },
-      { icon: Tree, className: 'bottom-0 left-0 text-orange-900/30 size-64', animation: { rotate: [-1, 1, -1] } },
-      { icon: Cloud, className: 'top-32 right-10 text-white/30', animation: { x: [0, -40, 0] } }
+      { icon: Cloud, className: 'top-10 right-10 text-blue-400/20 size-32', animation: { x: [0, -40, 0] } },
+      { icon: Tree, className: 'bottom-0 left-5 text-green-800/10 size-48', animation: { skewX: [1, -1, 1] } },
+      { icon: Flower, className: 'bottom-5 right-1/4 text-yellow-400/30', animation: { scale: 1.1 } }
     ]
   }
 ];
