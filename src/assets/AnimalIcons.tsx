@@ -104,3 +104,32 @@ export const Owl = ({ size = 24, ...props }: any) => (
     <path d="M5 6l-2-3 4 2M19 6l2-3-4 2" />
   </svg>
 );
+
+export const Spider = ({ size = 24, ...props }: any) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    {/* Round Body */}
+    <circle cx="12" cy="13" r="6" fill="currentColor" fillOpacity="0.1" />
+    <circle cx="12" cy="13" r="6" />
+    {/* Legs - Left */}
+    <path d="M7 10l-4-2M6 13l-4 0M7 16l-4 2" />
+    {/* Legs - Right */}
+    <path d="M17 10l4-2M18 13l4 0M17 16l4 2" />
+    {/* Eyes */}
+    <g fill="currentColor" stroke="none">
+      <circle cx="10" cy="11" r="1" />
+      <circle cx="14" cy="11" r="1" />
+    </g>
+    {/* Smile */}
+    <path d="M10 15c0.5 1 3.5 1 4 0" strokeWidth="1.5" />
+  </svg>
+);

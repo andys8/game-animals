@@ -8,7 +8,7 @@ import {
   Worm,
   Rainbow
 } from 'lucide-react';
-import { Frog, Bear, Owl } from '../assets/AnimalIcons';
+import { Frog, Bear, Owl, Spider } from '../assets/AnimalIcons';
 
 export type Language = 'en' | 'de';
 
@@ -134,6 +134,13 @@ export const ANIMALS: Record<string, Animal> = {
     icon: Worm,
     color: 'text-rose-400',
     soundEmojis: { en: 'Wiggle!', de: 'Wackel!' }
+  },
+  spider: {
+    id: 'spider',
+    names: { en: 'Spider', de: 'Spinne' },
+    icon: Spider,
+    color: 'text-slate-700',
+    soundEmojis: { en: 'Tick!', de: 'Krabbel!' }
   }
 };
 
@@ -196,7 +203,7 @@ export const SCENERIES: Scenery[] = [
     background: 'bg-linear-to-b from-blue-200 via-emerald-100 to-white',
     themeColor: 'text-cyan-600',
     ringColor: 'ring-cyan-400/40',
-    animals: [ANIMALS.snail, ANIMALS.worm],
+    animals: [ANIMALS.snail, ANIMALS.worm, ANIMALS.spider],
     decorations: [
       { icon: Cloud, className: 'top-10 right-10 text-blue-400/20 size-32', animation: { x: [0, -40, 0] } },
       { icon: Tree, className: 'bottom-0 left-5 text-green-800/10 size-48', animation: { skewX: [1, -1, 1] } },
